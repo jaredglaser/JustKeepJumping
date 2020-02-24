@@ -6,14 +6,15 @@ const collisionType = {
 }
 
 class Engine {
-    constructor(entities) {
+    constructor(entities, logicController) {
         this.entities = entities;
         this.lasttimestamp = 0.0;
+        this.logicController = logicController;
     }
     init() {
         var engineinstance = this;
         requestAnimationFrame(function(timestamp){
-            gameloop(timestamp, engineinstance);
+            engineinstance.logicController.gameloop(timestamp, engineinstance);
         });
     }
     collisionDetection(entity1, entity2) {
