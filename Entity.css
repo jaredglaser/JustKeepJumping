@@ -1,0 +1,12 @@
+#container {
+  width: 800px;
+  height: 800px;
+  position: relative;
+  background: lightblue;
+}
+#player {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  background-color: darkblue;
+}
