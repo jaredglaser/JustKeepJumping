@@ -11,12 +11,14 @@ class Engine {
         this.lasttimestamp = 0.0;
         this.logicController = logicController;
     }
+    
     init() {
         var engineinstance = this;
         requestAnimationFrame(function(timestamp){
             engineinstance.logicController.gameloop(timestamp, engineinstance);
         });
     }
+
     collisionDetection(entity1, entity2) {
 
         //collect the values for each of the sides of the two entities.
