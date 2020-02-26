@@ -10,3 +10,9 @@
   position: absolute;
   background-color: darkblue;
 }
+#platform {
+  width: 75px;
+  height: 25px;
+  position: absolute;
+  background-color: blueviolet;
+}
