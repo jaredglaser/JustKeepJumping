@@ -1,3 +1,11 @@
+const MOVEMENT = {
+    NONE: 0,
+    LEFT: 1,
+    RIGHT: 2,
+    UP: 3,
+    DOWN: 4
+}
+
 $(function () {
     var player1 = new Entity("player");
     var logicController1 = new LogicController();
@@ -9,16 +17,16 @@ $(function () {
       
         switch (event.key) {
           case "ArrowDown":
-            // code for "down arrow" key press.
+            logicController1.input = MOVEMENT.DOWN;
             break;
           case "ArrowUp":
-            // code for "up arrow" key press.
+            logicController1.input = MOVEMENT.UP;
             break;
           case "ArrowLeft":
-            logicController1.input = -5;
+            logicController1.input = MOVEMENT.LEFT;
             break;
           case "ArrowRight":
-            logicController1.input = 5;
+            logicController1.input = MOVEMENT.RIGHT;
             break;
           default:
             return; // Quit when this doesn't handle the key event.
@@ -34,16 +42,16 @@ $(function () {
       
         switch (event.key) {
           case "ArrowDown":
-            // code for "down arrow" key press.
+            logicController1.input = MOVEMENT.NONE;
             break;
           case "ArrowUp":
-            // code for "up arrow" key press.
+            logicController1.input = MOVEMENT.NONE;
             break;
           case "ArrowLeft":
-            logicController1.input = 0;
+            logicController1.input = MOVEMENT.NONE;
             break;
           case "ArrowRight":
-            logicController1.input = 0;
+            logicController1.input = MOVEMENT.NONE;
             break;
           default:
             return; // Quit when this doesn't handle the key event.
@@ -68,11 +76,24 @@ class LogicController {
             var timefactor = timeDifference/16.666;
             //TODO: actually figure out gravity here lol
             var entity = engineinstance.entities[i];
-            entity.vx += 2*timefactor;
-            entity.vy += 4*timefactor;
-            entity.x += this.input;
-            entity.y += 4*timefactor;
-            entity.updateposition();
+
+            entity.vy = 5; //default it to gravity
+
+            if(entity.elementid == "player"){
+                if(this.input == MOVEMENT.LEFT){
+                    entity.vx = -5;
+                }
+                else if(this.input == MOVEMENT.RIGHT){
+                    entity.vx = 5;
+                }
+                else if(this.input == MOVEMENT.UP){
+                    entity.vy = -5;
+                }
+                else if(this.input == MOVEMENT.DOWN){
+                    //idk
+                }
+            }
+            entity.updateposition(timefactor);
         }
         //TODO: need to figure out collisions here.
 

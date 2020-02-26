@@ -10,8 +10,12 @@ class Entity {
         this.top = 0;
         this.bottom = 0;
     }
-updateposition() {
+updateposition(timefactor) {
         var element = document.getElementById(this.elementid);
+
+        //determine the new x and y
+        this.x = this.x + (this.vx*timefactor);
+        this.y = this.y + (this.vy*timefactor);
         element.style.top = this.y + "px";
         element.style.left = this.x + "px";
         //check out of bounds
