@@ -14,5 +14,7 @@
   width: 75px;
   height: 25px;
   position: absolute;
-  background-color: blueviolet;
+  border-style: double;
+  border-color: yellow;
+  background-color: purple;
 }
