@@ -72,6 +72,26 @@ class LogicController {
     gameloop(timestamp, engineinstance) {
         var timeDifference = timestamp - this.lasttimestamp;
         this.lasttimestamp = timestamp;
+        var generatePlatforms = false;
+        if(engineinstance.entities.length = 1){ //was the game just started?
+            generatePlatforms = true;
+        }
+        //first check if any of the platforms are past the 100px mark
+        for (var i = 0; i < engineinstance.entities.length; i++) {
+            if(entity.elementid != "player" && this.y > 100 && this.alreadyfallen == false){
+                generatePlatforms = true;
+                break;
+            }
+        }
+        //now set the already fallen flag on all of them
+        engineinstance.entities.map(function(x) { 
+            x.alreadyfallen = true; 
+            return x
+          });
+
+        //if new platforms need to be added, add them now
+        //TODO: actually do this
+
         for (var i = 0; i < engineinstance.entities.length; i++) {
             var timefactor = timeDifference/16.666;
             //TODO: actually figure out gravity here lol
