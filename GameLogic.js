@@ -26,6 +26,31 @@ $(function () {
       
         // Cancel the default action to avoid it being handled twice
         event.preventDefault();
+    }, true);
+    window.addEventListener("keyup", function (event) {
+        if (event.defaultPrevented) {
+          return; // Do nothing if the event was already processed
+        }
+      
+        switch (event.key) {
+          case "ArrowDown":
+            // code for "down arrow" key press.
+            break;
+          case "ArrowUp":
+            // code for "up arrow" key press.
+            break;
+          case "ArrowLeft":
+            logicController1.input = 0;
+            break;
+          case "ArrowRight":
+            logicController1.input = 0;
+            break;
+          default:
+            return; // Quit when this doesn't handle the key event.
+        }
+      
+        // Cancel the default action to avoid it being handled twice
+        event.preventDefault();
       }, true);
     engine1.init();
 });
