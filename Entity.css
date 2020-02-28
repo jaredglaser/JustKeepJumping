@@ -15,6 +15,7 @@
   height: 25px;
   position: absolute;
   border-style: double;
+  border-radius: 10px;
   border-color: yellow;
   background-color: purple;
 }
