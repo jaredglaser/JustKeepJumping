@@ -91,7 +91,19 @@ class LogicController {
           });
 
         //if new platforms need to be added, add them now
-        //TODO: actually do this
+        if(generatePlatforms){
+        var testingplatformarray = [1,1,1,0,0,1,1,0];
+        for(i = 0; i < testingplatformarray.length*100; i+=100){
+          //make a new div
+          var id = this.create_UUID();
+          $("#container").append("<div id=" + id + " class=platform></div>");
+          var platform = new Entity(id);
+          platform.x = i;
+          engineinstance.entities.push(platform);
+
+        }
+      }
+
 
         for (var i = 0; i < engineinstance.entities.length; i++) {
             var timefactor = timeDifference/16.666;
@@ -124,4 +136,13 @@ class LogicController {
             gamelogicinstance.gameloop(timestamp, engineinstance);
         });
     }
+    create_UUID(){
+      var dt = new Date().getTime();
+      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = (dt + Math.random()*16)%16 | 0;
+          dt = Math.floor(dt/16);
+          return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+      });
+      return uuid;
+  }
 }

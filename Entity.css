@@ -10,8 +10,8 @@
   position: absolute;
   background-color: darkblue;
 }
-#platform {
-  width: 75px;
+.platform {
+  width: 100px;
   height: 25px;
   position: absolute;
   border-style: double;
