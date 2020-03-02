@@ -10,6 +10,7 @@ $(function () {
     var player1 = new Entity("player");
     var logicController1 = new LogicController();
     var engine1 = new Engine( [ player1 ], logicController1);
+    var btnLock = false;
     window.addEventListener("keydown", function (event) {
         if (event.defaultPrevented) {
           return; // Do nothing if the event was already processed
@@ -20,7 +21,10 @@ $(function () {
             logicController1.input = MOVEMENT.DOWN;
             break;
           case "ArrowUp":
-            logicController1.input = MOVEMENT.UP;
+            if (btnLock == false) {
+              logicController1.input = MOVEMENT.UP;
+              btnLock = true;
+            }
             break;
           case "ArrowLeft":
             logicController1.input = MOVEMENT.LEFT;
@@ -46,6 +50,7 @@ $(function () {
             break;
           case "ArrowUp":
             logicController1.input = MOVEMENT.NONE;
+            btnLock = false;
             break;
           case "ArrowLeft":
             logicController1.input = MOVEMENT.NONE;
@@ -89,7 +94,6 @@ class LogicController {
             x.alreadyfallen = true; 
             return x
           });
-
         //if new platforms need to be added, add them now
         if(generatePlatforms){
         var testingplatformarray = [1,1,1,0,0,1,1,0];
@@ -110,8 +114,6 @@ class LogicController {
             //TODO: actually figure out gravity here lol
             var entity = engineinstance.entities[i];
 
-            entity.vy = 5; //default it to gravity
-
             if(entity.elementid == "player"){
                 if(this.input == MOVEMENT.LEFT){
                     entity.vx = -5;
@@ -120,10 +122,17 @@ class LogicController {
                     entity.vx = 5;
                 }
                 else if(this.input == MOVEMENT.UP){
-                    entity.vy = -5;
+                  document.getElementById(entity.elementid).style.width = "30px";
+                  document.getElementById(entity.elementid).style.height = "20px";
+                  entity.ay = -5;
                 }
                 else if(this.input == MOVEMENT.DOWN){
                     //idk
+                }
+                else {
+                  document.getElementById(entity.elementid).style.width = "25px";
+                  document.getElementById(entity.elementid).style.height = "25px";
+                  entity.vx = 0;
                 }
             }
             entity.updateposition(timefactor);
