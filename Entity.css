@@ -19,3 +19,9 @@
   border-color: yellow;
   background-color: purple;
 }
+.enemy{
+  width: 30px;
+  height: 45px;
+  position: absolute;
+  background-color: green;
+}
