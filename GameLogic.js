@@ -112,7 +112,7 @@ class LogicController {
                 else if(this.input == MOVEMENT.UP){
                   document.getElementById(entity.elementid).style.width = "30px";
                   document.getElementById(entity.elementid).style.height = "20px";
-                  entity.ay = -6;
+                  entity.ay = -5;
                 }
                 else if(this.input == MOVEMENT.DOWN){
                     //idk

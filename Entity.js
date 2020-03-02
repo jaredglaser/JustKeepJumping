@@ -25,6 +25,9 @@ class Entity {
         if (this.vy > 5) {
             this.vy = 5;
         }
+        if (this.ay > 5) {
+            this.ay = 5;
+        }
         element.style.top = this.y + "px";
         element.style.left = this.x + "px";
         //check out of bounds
