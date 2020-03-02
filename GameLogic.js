@@ -7,7 +7,7 @@ const MOVEMENT = {
 }
 
 $(function () {
-    var player1 = new Entity("player");
+    var player1 = new Entity("player",entityType.PLAYER);
     var logicController1 = new LogicController();
     var engine1 = new Engine( [ player1 ], logicController1);
     window.addEventListener("keydown", function (event) {
@@ -97,7 +97,7 @@ class LogicController {
           //make a new div
           var id = this.create_UUID();
           $("#container").append("<div id=" + id + " class=platform></div>");
-          var platform = new Entity(id);
+          var platform = new Entity(id,entityType.platform);
           platform.x = i;
           engineinstance.entities.push(platform);
 
