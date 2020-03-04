@@ -27,8 +27,8 @@ updateposition(timefactor) {
         element.style.left = this.x + "px";
 
         //set the left, right, top, and bottom
-        var width = $('#' + this.id).css("width");
-        var height = $('#' + this.id).css("height");
+        var width = parseInt($('#' + this.elementid).css("width"));
+        var height = parseInt($('#' + this.elementid).css("height"));
         this.left = this.x;
         this.right = this.x + width;
         this.top = this.y;
