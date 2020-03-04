@@ -7,7 +7,7 @@ const MOVEMENT = {
 }
 
 $(function () {
-    var player1 = new Entity("player");
+    var player1 = new Entity("player",entityType.PLAYER);
     var logicController1 = new LogicController();
     var engine1 = new Engine( [ player1 ], logicController1);
     window.addEventListener("keydown", function (event) {

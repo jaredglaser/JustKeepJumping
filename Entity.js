@@ -1,5 +1,10 @@
+const entityType = {
+    PLAYER: 0,
+    PLATFORM: 1
+}
+
 class Entity {
-    constructor(id) {
+    constructor(id,type) {
         this.elementid = id;
         this.ay = 0;
         this.ax = 0;
@@ -12,6 +17,7 @@ class Entity {
         this.top = 0;
         this.bottom = 0;
         this.alreadyfallen = false;
+        this.type = type;
     }
     updateposition(timefactor) {
         var element = document.getElementById(this.elementid);
@@ -36,6 +42,15 @@ class Entity {
         }
         element.style.top = this.y + "px";
         element.style.left = this.x + "px";
+
+        //set the left, right, top, and bottom
+        var width = parseInt($('#' + this.elementid).css("width"));
+        var height = parseInt($('#' + this.elementid).css("height"));
+        this.left = this.x;
+        this.right = this.x + width;
+        this.top = this.y;
+        this.bottom = this.y + height;
+
         //check out of bounds
         if(this.y >= 800 || this.x >= 800){
             element.style.top = "0px";
