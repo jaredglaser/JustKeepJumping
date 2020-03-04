@@ -10,7 +10,6 @@ $(function () {
     var player1 = new Entity("player");
     var logicController1 = new LogicController();
     var engine1 = new Engine( [ player1 ], logicController1);
-    var btnLock = false;
     window.addEventListener("keydown", function (event) {
         if (event.defaultPrevented) {
           return; // Do nothing if the event was already processed
@@ -21,10 +20,7 @@ $(function () {
             logicController1.input = MOVEMENT.DOWN;
             break;
           case "ArrowUp":
-            if (btnLock == false) {
-              logicController1.input = MOVEMENT.UP;
-              btnLock = true;
-            }
+            logicController1.input = MOVEMENT.UP;
             break;
           case "ArrowLeft":
             logicController1.input = MOVEMENT.LEFT;
@@ -50,7 +46,6 @@ $(function () {
             break;
           case "ArrowUp":
             logicController1.input = MOVEMENT.NONE;
-            btnLock = false;
             break;
           case "ArrowLeft":
             logicController1.input = MOVEMENT.NONE;
@@ -78,7 +73,7 @@ class LogicController {
         var timeDifference = timestamp - this.lasttimestamp;
         this.lasttimestamp = timestamp;
         var generatePlatforms = false;
-        if(engineinstance.entities.length = 1){ //was the game just started?
+        if(engineinstance.entities.length == 1){ //was the game just started?
             generatePlatforms = true;
         }
         //first check if any of the platforms are past the 100px mark
@@ -90,41 +85,38 @@ class LogicController {
             }
         }
         //now set the already fallen flag on all of them
-        engineinstance.entities.map(function(x) { 
+         engineinstance.entities.map(function(x) { 
             x.alreadyfallen = true; 
             return x
-          });
+          }); 
         //if new platforms need to be added, add them now
         if(generatePlatforms){
-        var testingplatformarray = [1,1,1,0,0,1,1,0];
-        for(i = 0; i < testingplatformarray.length*100; i+=100){
-          //make a new div
-          var id = this.create_UUID();
-          $("#container").append("<div id=" + id + " class=platform></div>");
-          var platform = new Entity(id);
-          platform.x = i;
-          engineinstance.entities.push(platform);
-
+          var testingplatformarray = [1,1,1,0,0,1,1,0];
+          for(i = 0; i < testingplatformarray.length*100; i+=100){
+            //make a new div
+            var id = this.create_UUID();
+            $("#container").append("<div id=" + id + " class=platform></div>");
+            var platform = new Entity(id);
+            platform.x = i;
+            engineinstance.entities.push(platform);
+          }
         }
-      }
 
 
         for (var i = 0; i < engineinstance.entities.length; i++) {
             var timefactor = timeDifference/16.666;
-            //TODO: actually figure out gravity here lol
             var entity = engineinstance.entities[i];
-
             if(entity.elementid == "player"){
                 if(this.input == MOVEMENT.LEFT){
-                    entity.vx = -5;
+                    entity.ax = -1;
                 }
                 else if(this.input == MOVEMENT.RIGHT){
-                    entity.vx = 5;
+                    entity.ax = 1;
                 }
                 else if(this.input == MOVEMENT.UP){
                   document.getElementById(entity.elementid).style.width = "30px";
                   document.getElementById(entity.elementid).style.height = "20px";
-                  entity.ay = -5;
+                  entity.ay = -2;
                 }
                 else if(this.input == MOVEMENT.DOWN){
                     //idk
@@ -132,6 +124,7 @@ class LogicController {
                 else {
                   document.getElementById(entity.elementid).style.width = "25px";
                   document.getElementById(entity.elementid).style.height = "25px";
+                  entity.ax = 0;
                   entity.vx = 0;
                 }
             }

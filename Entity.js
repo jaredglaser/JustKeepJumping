@@ -17,16 +17,22 @@ class Entity {
         var element = document.getElementById(this.elementid);
 
         //determine the new x and y
-        this.ay = this.ay + 2;
+        this.ay = this.ay + 1;
         this.vy = this.vy + (this.ay * timefactor);
         this.vx = this.vx + (this.ax * timefactor);
         this.x = this.x + (this.vx*timefactor);
         this.y = this.y + (this.vy*timefactor);
-        if (this.vy > 5) {
-            this.vy = 5;
+        if (this.vy > 3) {
+            this.vy = 3;
         }
-        if (this.ay > 5) {
-            this.ay = 5;
+        if (this.ay > 3) {
+            this.ay = 3;
+        }
+        if (this.vx > 3) {
+            this.vx = 3;
+        }
+        if (this.ax > 3) {
+            this.ax = 3;
         }
         element.style.top = this.y + "px";
         element.style.left = this.x + "px";
