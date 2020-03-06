@@ -122,7 +122,7 @@ class LogicController {
       var timefactor = timeDifference / 16.666;
       //TODO: actually figure out gravity here lol
       var entity = engineinstance.entities[i];
-
+      console.log(entity.elementid)
       entity.vy = 5; //default it to gravity
 
       if (entity.elementid == "player") {
@@ -142,6 +142,9 @@ class LogicController {
       entity.updateposition(timefactor);
     }
     //TODO: need to figure out collisions here.
+    for(var i=0; i< engineinstance.entities.length; i++){
+      var entity = engineinstance.entities[i];
+    }
 
     //TODO: resolve the collisions here.
     var gamelogicinstance = this;
