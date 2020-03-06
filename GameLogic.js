@@ -124,16 +124,7 @@ class LogicController {
 
     //randomly generate enemies when platforms are not being generated
     //Will have a 10% chance of generating
-    if (!generatePlatforms) {
-      if ((Math.floor(Math.random() * 10)) == 0) {
-        var eid = this.create_UUID();
-        $("#container").append("<div id=" + eid + " class=enemy></div>");
-        var enemy = new Entity(eid);
-        enemy.x = ((Math.floor(Math.random() * 7)) + 1) * 100;
-        enemy.y = 400;
-        engineinstance.entities.push(enemy);
-      }
-    }
+
 
     for (var i = 0; i < engineinstance.entities.length; i++) {
       var timefactor = timeDifference / 16.666;
@@ -180,11 +171,6 @@ class LogicController {
     //TODO: need to figure out collisions here.
 
 
-    //TODO: resolve the collisions here.
-    var gamelogicinstance = this;
-    requestAnimationFrame(function (timestamp) {
-      gamelogicinstance.gameloop(timestamp, engineinstance);
-    });
   }
   create_UUID() {
     var dt = new Date().getTime();
