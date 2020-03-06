@@ -110,17 +110,7 @@ class LogicController {
             return x
           }); 
         //if new platforms need to be added, add them now
-        if(generatePlatforms){
-          var testingplatformarray = [1,1,1,0,0,1,1,0];
-          for(i = 0; i < testingplatformarray.length*100; i+=100){
-            //make a new div
-            var id = this.create_UUID();
-            $("#container").append("<div id=" + id + " class=platform></div>");
-            var platform = new Entity(id,entityType.PLATFORM);
-            platform.x = i;
-            engineinstance.entities.push(platform);
-          }
-        }
+        this.spawnEntities(generatePlatforms,engineinstance);
 
 
         for (var i = 0; i < engineinstance.entities.length; i++) {
@@ -165,6 +155,21 @@ class LogicController {
             gamelogicinstance.gameloop(timestamp, engineinstance);
         });
     }
+
+    spawnEntities(platformSpawnTime, engineinstance){
+      if(platformSpawnTime){
+        var testingplatformarray = [1,1,1,0,0,1,1,0];
+        for(var i = 0; i < testingplatformarray.length*100; i+=100){
+          //make a new div
+          var id = this.create_UUID();
+          $("#container").append("<div id=" + id + " class=platform></div>");
+          var platform = new Entity(id,entityType.PLATFORM);
+          platform.x = i;
+          engineinstance.entities.push(platform);
+        }
+      }
+    }
+
     create_UUID(){
       var dt = new Date().getTime();
       var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
