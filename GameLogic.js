@@ -178,9 +178,7 @@ class LogicController {
       });
     }
     //TODO: need to figure out collisions here.
-    for (var i = 0; i < engineinstance.entities.length; i++) {
-      var entity = engineinstance.entities[i];
-    }
+
 
     //TODO: resolve the collisions here.
     var gamelogicinstance = this;
