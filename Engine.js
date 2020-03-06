@@ -58,9 +58,9 @@ class Engine {
     var element = document.getElementById(entity.elementid);
     if(entity.y >= 800 || entity.x >= 800){
         if(entity.type == entityType.PLATFORM){
-            var idToRemove = entity.elementid;
-            this.entities.splice(this.entities.indexOf(entity));
-            $("#container").remove('#' + idToRemove);
+            console.log("removing " + entity.elementid);
+            element.remove();
+            this.entities.splice(this.entities.indexOf(entity),1);
         }
         else{
         element.style.top = "0px";
