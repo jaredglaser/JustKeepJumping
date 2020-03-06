@@ -159,13 +159,15 @@ class LogicController {
     spawnEntities(platformSpawnTime, engineinstance){
       if(platformSpawnTime){
         var testingplatformarray = [1,1,1,0,0,1,1,0];
-        for(var i = 0; i < testingplatformarray.length*100; i+=100){
+        for(var i = 0; i < testingplatformarray.length; i++){
           //make a new div
-          var id = this.create_UUID();
-          $("#container").append("<div id=" + id + " class=platform></div>");
-          var platform = new Entity(id,entityType.PLATFORM);
-          platform.x = i;
-          engineinstance.entities.push(platform);
+          if(testingplatformarray[i]){
+            var id = this.create_UUID();
+            $("#container").append("<div id=" + id + " class=platform></div>");
+            var platform = new Entity(id,entityType.PLATFORM);
+            platform.x = i*100;
+            engineinstance.entities.push(platform);
+          }
         }
       }
     }
