@@ -6,62 +6,82 @@ const MOVEMENT = {
     DOWN: 4
 }
 
+// sets up button listeners for instructions button and modal
 $(function () {
-    var player1 = new Entity("player",entityType.PLAYER);
-    var logicController1 = new LogicController();
-    var engine1 = new Engine( [ player1 ], logicController1);
-    window.addEventListener("keydown", function (event) {
-        if (event.defaultPrevented) {
-          return; // Do nothing if the event was already processed
-        }
-      
-        switch (event.key) {
-          case "ArrowDown":
-            logicController1.input = MOVEMENT.DOWN;
-            break;
-          case "ArrowUp":
-            logicController1.input = MOVEMENT.UP;
-            break;
-          case "ArrowLeft":
-            logicController1.input = MOVEMENT.LEFT;
-            break;
-          case "ArrowRight":
-            logicController1.input = MOVEMENT.RIGHT;
-            break;
-          default:
-            return; // Quit when this doesn't handle the key event.
-        }
-      
-        // Cancel the default action to avoid it being handled twice
-        event.preventDefault();
-    }, true);
-    window.addEventListener("keyup", function (event) {
-        if (event.defaultPrevented) {
-          return; // Do nothing if the event was already processed
-        }
-      
-        switch (event.key) {
-          case "ArrowDown":
-            logicController1.input = MOVEMENT.NONE;
-            break;
-          case "ArrowUp":
-            logicController1.input = MOVEMENT.NONE;
-            break;
-          case "ArrowLeft":
-            logicController1.input = MOVEMENT.NONE;
-            break;
-          case "ArrowRight":
-            logicController1.input = MOVEMENT.NONE;
-            break;
-          default:
-            return; // Quit when this doesn't handle the key event.
-        }
-      
-        // Cancel the default action to avoid it being handled twice
-        event.preventDefault();
-      }, true);
-    engine1.init();
+  document.getElementById("instrBtn").addEventListener("click", function(){
+    document.querySelector(".bg-modal").style.display = "flex";
+  });
+
+  document.querySelector(".close").addEventListener("click", function() {
+    document.querySelector(".bg-modal").style.display = "none";
+  });
+
 });
+
+
+
+function startGame() {
+
+  document.getElementById("player").style.visibility = "visible";
+  document.getElementById("pg-header").style.visibility = "hidden";
+
+  var player1 = new Entity("player",entityType.PLAYER);
+  var logicController1 = new LogicController();
+  var engine1 = new Engine( [ player1 ], logicController1);
+  window.addEventListener("keydown", function (event) {
+      if (event.defaultPrevented) {
+        return; // Do nothing if the event was already processed
+      }
+    
+      switch (event.key) {
+        case "ArrowDown":
+          logicController1.input = MOVEMENT.DOWN;
+          break;
+        case "ArrowUp":
+          logicController1.input = MOVEMENT.UP;
+          break;
+        case "ArrowLeft":
+          logicController1.input = MOVEMENT.LEFT;
+          break;
+        case "ArrowRight":
+          logicController1.input = MOVEMENT.RIGHT;
+          break;
+        default:
+          return; // Quit when this doesn't handle the key event.
+      }
+    
+      // Cancel the default action to avoid it being handled twice
+      event.preventDefault();
+  }, true);
+  window.addEventListener("keyup", function (event) {
+      if (event.defaultPrevented) {
+        return; // Do nothing if the event was already processed
+      }
+    
+      switch (event.key) {
+        case "ArrowDown":
+          logicController1.input = MOVEMENT.NONE;
+          break;
+        case "ArrowUp":
+          logicController1.input = MOVEMENT.NONE;
+          break;
+        case "ArrowLeft":
+          logicController1.input = MOVEMENT.NONE;
+          break;
+        case "ArrowRight":
+          logicController1.input = MOVEMENT.NONE;
+          break;
+        default:
+          return; // Quit when this doesn't handle the key event.
+      }
+    
+      // Cancel the default action to avoid it being handled twice
+      event.preventDefault();
+    }, true);
+  engine1.init();
+}
+
+
 
 class LogicController {
     constructor(){

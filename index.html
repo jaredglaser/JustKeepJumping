@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html>
   <link rel="stylesheet" type="text/css" href="Entity.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="GameLogic.js"></script>
   <script src="Entity.js"></script>
   <script src="Engine.js"></script>
 
+
+
+
   <body>
 
     <div id ="container">
+      <div class="page-header" id="pg-header">
+          <h1>Just Keep Jumping</h1>
+          <button id=startBtn type="button" class="btn btn-info btn-lg" onClick="startGame() ">Start</button>
+          <button id=instrBtn type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#instrModal">Instructions</button>
+
+            <!-- Modal -->
+            <div class="bg-modal">
+              <div class="modal-content">
+                <div class="close">+</div>
+
+              </div>
+            </div>
+
+
+
+      </div>
       <div id ="player"></div>
+
+
+
+
+
     </div>
+
+
   </body>
 </html>
