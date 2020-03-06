@@ -9,10 +9,49 @@
   height: 25px;
   position: absolute;
   background-color: darkblue;
+  visibility: hidden;
 }
+
+.page-header {
+  padding: 60px;
+  text-align: center;
+  color: white;
+  font-size: 48px;
+  visibility: visible;
+}
+
+.bg-modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  position: absolute;
+  top: 0;
+  left: 0px;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.modal-content {
+  width: 500px;
+  height: 300px;
+  background-color: white;
+  border-radius: 4px;
+  position: relative;
+}
+
+.close{
+  position: absolute;
+  top: 0;
+  right: 14px;
+  font-size: 42px;
+  transform: rotate(45deg);
+}
+
+
 .platform {
   width: 100px;
-  height: 25px;
+  height: 10px;
   position: absolute;
   border-style: double;
   border-radius: 10px;

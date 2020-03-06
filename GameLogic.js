@@ -6,8 +6,26 @@ const MOVEMENT = {
   DOWN: 4
 }
 
+// sets up button listeners for instructions button and modal
 $(function () {
-  var player1 = new Entity("player");
+  document.getElementById("instrBtn").addEventListener("click", function () {
+    document.querySelector(".bg-modal").style.display = "flex";
+  });
+
+  document.querySelector(".close").addEventListener("click", function () {
+    document.querySelector(".bg-modal").style.display = "none";
+  });
+
+});
+
+
+
+function startGame() {
+
+  document.getElementById("player").style.visibility = "visible";
+  document.getElementById("pg-header").style.visibility = "hidden";
+
+  var player1 = new Entity("player", entityType.PLAYER);
   var logicController1 = new LogicController();
   var engine1 = new Engine([player1], logicController1);
   window.addEventListener("keydown", function (event) {
@@ -61,7 +79,9 @@ $(function () {
     event.preventDefault();
   }, true);
   engine1.init();
-});
+}
+
+
 
 class LogicController {
   constructor() {
@@ -73,7 +93,7 @@ class LogicController {
     var timeDifference = timestamp - this.lasttimestamp;
     this.lasttimestamp = timestamp;
     var generatePlatforms = false;
-    if (engineinstance.entities.length = 1) { //was the game just started?
+    if (engineinstance.entities.length == 1) { //was the game just started?
       generatePlatforms = true;
     }
     //first check if any of the platforms are past the 100px mark
@@ -89,7 +109,6 @@ class LogicController {
       x.alreadyfallen = true;
       return x
     });
-
     //if new platforms need to be added, add them now
     if (generatePlatforms) {
       var testingplatformarray = [1, 1, 1, 0, 0, 1, 1, 0];
@@ -97,17 +116,16 @@ class LogicController {
         //make a new div
         var id = this.create_UUID();
         $("#container").append("<div id=" + id + " class=platform></div>");
-        var platform = new Entity(id);
+        var platform = new Entity(id, entityType.PLATFORM);
         platform.x = i;
         engineinstance.entities.push(platform);
-
       }
     }
 
     //randomly generate enemies when platforms are not being generated
     //Will have a 10% chance of generating
-    if(!generatePlatforms){
-      if((Math.floor(Math.random()*10)) == 0){
+    if (!generatePlatforms) {
+      if ((Math.floor(Math.random() * 10)) == 0) {
         var eid = this.create_UUID();
         $("#container").append("<div id=" + eid + " class=enemy></div>");
         var enemy = new Entity(eid);
@@ -117,32 +135,50 @@ class LogicController {
       }
     }
 
-
     for (var i = 0; i < engineinstance.entities.length; i++) {
       var timefactor = timeDifference / 16.666;
-      //TODO: actually figure out gravity here lol
       var entity = engineinstance.entities[i];
-      console.log(entity.elementid)
-      entity.vy = 5; //default it to gravity
-
       if (entity.elementid == "player") {
         if (this.input == MOVEMENT.LEFT) {
-          entity.vx = -5;
+          entity.ax = -1;
         }
         else if (this.input == MOVEMENT.RIGHT) {
-          entity.vx = 5;
+          entity.ax = 1;
         }
         else if (this.input == MOVEMENT.UP) {
-          entity.vy = -5;
+          document.getElementById(entity.elementid).style.width = "30px";
+          document.getElementById(entity.elementid).style.height = "20px";
+          entity.ay = -2;
         }
         else if (this.input == MOVEMENT.DOWN) {
           //idk
         }
+        else {
+          document.getElementById(entity.elementid).style.width = "25px";
+          document.getElementById(entity.elementid).style.height = "25px";
+          entity.ax = 0;
+          entity.vx = 0;
+        }
       }
+      //Update the position
       entity.updateposition(timefactor);
+      //Is it out of bounds?
+      engineinstance.boundsDetection(entity);
+
+
+
+
+
+      //TODO: need to figure out collisions here.
+
+      //TODO: resolve the collisions here.
+      var gamelogicinstance = this;
+      requestAnimationFrame(function (timestamp) {
+        gamelogicinstance.gameloop(timestamp, engineinstance);
+      });
     }
     //TODO: need to figure out collisions here.
-    for(var i=0; i< engineinstance.entities.length; i++){
+    for (var i = 0; i < engineinstance.entities.length; i++) {
       var entity = engineinstance.entities[i];
     }
 
