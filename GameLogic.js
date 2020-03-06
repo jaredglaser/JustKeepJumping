@@ -96,7 +96,7 @@ class LogicController {
             //make a new div
             var id = this.create_UUID();
             $("#container").append("<div id=" + id + " class=platform></div>");
-            var platform = new Entity(id);
+            var platform = new Entity(id,entityType.PLATFORM);
             platform.x = i;
             engineinstance.entities.push(platform);
           }
@@ -128,8 +128,15 @@ class LogicController {
                   entity.vx = 0;
                 }
             }
+            //Update the position
             entity.updateposition(timefactor);
+            //Is it out of bounds?
+            engineinstance.boundsDetection(entity);
         }
+        
+        
+
+
         //TODO: need to figure out collisions here.
 
         //TODO: resolve the collisions here.

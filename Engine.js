@@ -52,6 +52,24 @@ class Engine {
         }
 
     }
+
+    boundsDetection(entity){
+    //check out of bounds
+    var element = document.getElementById(entity.elementid);
+    if(entity.y >= 800 || entity.x >= 800){
+        if(entity.type == entityType.PLATFORM){
+            var idToRemove = entity.elementid;
+            this.entities.splice(this.entities.indexOf(entity));
+            $("#container").remove('#' + idToRemove);
+        }
+        else{
+        element.style.top = "0px";
+        element.style.left = "0px";
+        entity.x = 0;
+        entity.y = 0;
+        }
+    }
+}
 }
 
 

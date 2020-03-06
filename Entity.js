@@ -50,13 +50,5 @@ class Entity {
         this.right = this.x + width;
         this.top = this.y;
         this.bottom = this.y + height;
-
-        //check out of bounds
-        if(this.y >= 800 || this.x >= 800){
-            element.style.top = "0px";
-            element.style.left = "0px";
-            this.x = 0;
-            this.y = 0;
-        }
     }
 }
