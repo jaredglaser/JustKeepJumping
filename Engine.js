@@ -58,7 +58,7 @@ class Engine {
     var element = document.getElementById(entity.elementid);
     if(entity.y >= 800 || entity.x >= 800){
         if(entity.type == entityType.PLATFORM){
-            console.log("removing " + entity.elementid);
+            console.log("removing " + entity.elementid + " with x:" + entity.x + " and with y:" + entity.y);
             element.remove();
             this.entities.splice(this.entities.indexOf(entity),1);
         }

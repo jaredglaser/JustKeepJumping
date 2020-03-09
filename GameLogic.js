@@ -87,6 +87,7 @@ class LogicController {
     constructor(){
         this.lasttimestamp = 0;
         this.input = 0;
+        this.firstLoop = true;
     }
 
     gameloop(timestamp, engineinstance) {
@@ -104,11 +105,13 @@ class LogicController {
                 break;
             }
         }
+        if(generatePlatforms){
         //now set the already fallen flag on all of them
          engineinstance.entities.map(function(x) { 
             x.alreadyfallen = true; 
             return x
           }); 
+        }
         //if new platforms need to be added, add them now
         this.spawnEntities(generatePlatforms,engineinstance);
 
@@ -139,17 +142,20 @@ class LogicController {
                 }
             }
             //Update the position
-            entity.updateposition(timefactor);
+            if(!this.firstLoop){ //Ignore the first loop due to the first frame having a very large timefactor
+              entity.updateposition(timefactor);
+            }
             //Is it out of bounds?
             engineinstance.boundsDetection(entity);
         }
-        
-        
-
-
         //TODO: need to figure out collisions here.
 
         //TODO: resolve the collisions here.
+
+        //If this was the first frame, allow the following frames to update positions of entitites
+        if(this.firstLoop){
+          this.firstLoop = false;
+        }
         var gamelogicinstance = this;
         requestAnimationFrame(function(timestamp){
             gamelogicinstance.gameloop(timestamp, engineinstance);
@@ -166,6 +172,10 @@ class LogicController {
             $("#container").append("<div id=" + id + " class=platform></div>");
             var platform = new Entity(id,entityType.PLATFORM);
             platform.x = i*100;
+            platform.y = 0;
+            var element = document.getElementById(id);
+            element.style.top = toString(platform.y) + "px";
+            element.style.left = toString(platform.x) + "px";
             engineinstance.entities.push(platform);
           }
         }
