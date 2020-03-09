@@ -100,7 +100,7 @@ class LogicController {
         //first check if any of the platforms are past the 100px mark
         for (var i = 0; i < engineinstance.entities.length; i++) {
             var entity = engineinstance.entities[i];
-            if(entity.elementid != "player" && this.y > 100 && this.alreadyfallen == false){
+            if(entity.elementid != "player" && entity.y > 100 && entity.alreadyfallen == false){
                 generatePlatforms = true;
                 break;
             }
