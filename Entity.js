@@ -31,7 +31,6 @@ class Entity {
         }
      
         this.vy = this.vy + (this.ay * timefactor);
-
         this.vx = this.vx + (this.ax * timefactor);
         this.x = this.x + (this.vx*timefactor);
         this.y = this.y + (this.vy*timefactor);

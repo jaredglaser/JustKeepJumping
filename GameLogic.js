@@ -108,6 +108,7 @@ class LogicController {
         if(generatePlatforms){
         //now set the already fallen flag on all of them
          engineinstance.entities.map(function(x) { 
+           console.log(x.elementid);
             x.alreadyfallen = true; 
             return x
           }); 
@@ -142,13 +143,10 @@ class LogicController {
                   entity.vx = 0;
                 }
                 //Handle collisions between the player and of the other entities
-                for (var j = 0; j < engineinstance.entities.length; j++) {
-                    entity = engineinstance.entities[j];
-                    if(entity.type != entityType.PLAYER){
-                      if(engineinstance.collisionDetection(engineinstance.entities[0],entity) == collisionType.ABOVE){
-                          engineinstance.entities[0].correctPosition(entity);
-                          console.log("Collided with " + entity.elementid)
-                      }
+                for (var j = 1; j < engineinstance.entities.length; j++) {
+                    if(engineinstance.collisionDetection(entity, engineinstance.entities[j]) == collisionType.ABOVE){
+                        entity.correctPosition(engineinstance.entities[j]);
+                        console.log("Collided with " + engineinstance.entities[j].elementid);
                     }
                 }
             }
@@ -159,7 +157,7 @@ class LogicController {
             //Is it out of bounds?
             engineinstance.boundsDetection(entity);
         }
-        //TODO: need to figure out collisions here.
+
 
         //TODO: resolve the collisions here.
 
@@ -183,7 +181,7 @@ class LogicController {
             $("#container").append("<div id=" + id + " class=platform></div>");
             var platform = new Entity(id,entityType.PLATFORM);
             platform.x = i*100;
-            platform.y = 0;
+            platform.y = -200;
             var element = document.getElementById(id);
             element.style.top = toString(platform.y) + "px";
             element.style.left = toString(platform.x) + "px";
