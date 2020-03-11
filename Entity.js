@@ -23,8 +23,15 @@ class Entity {
         var element = document.getElementById(this.elementid);
 
         //determine the new x and y
-        this.ay = this.ay + 1;
+        if(this.type == entityType.PLAYER){
+            this.ay = this.ay + 2;
+        }
+        else{
+            this.ay = this.ay + 1;  
+        }
+     
         this.vy = this.vy + (this.ay * timefactor);
+
         this.vx = this.vx + (this.ax * timefactor);
         this.x = this.x + (this.vx*timefactor);
         this.y = this.y + (this.vy*timefactor);
@@ -50,5 +57,14 @@ class Entity {
         this.right = this.x + width;
         this.top = this.y;
         this.bottom = this.y + height;
+    }
+    correctPosition(otherEntity){
+        var element = document.getElementById(this.elementid);
+
+        this.y = otherEntity.y + parseInt($('#' + this.elementid).css("height"));
+        this.vy = otherEntity.vy;
+        
+        element.style.top = this.y + "px";
+        element.style.left = this.x + "px";
     }
 }

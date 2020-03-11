@@ -120,6 +120,7 @@ class LogicController {
             var timefactor = timeDifference/16.666;
             var entity = engineinstance.entities[i];
             if(entity.elementid == "player"){
+                //Handle the user movement
                 if(this.input == MOVEMENT.LEFT){
                     entity.ax = -1;
                 }
@@ -139,6 +140,16 @@ class LogicController {
                   document.getElementById(entity.elementid).style.height = "25px";
                   entity.ax = 0;
                   entity.vx = 0;
+                }
+                //Handle collisions between the player and of the other entities
+                for (var j = 0; j < engineinstance.entities.length; j++) {
+                    entity = engineinstance.entities[j];
+                    if(entity.type != entityType.PLAYER){
+                      if(engineinstance.collisionDetection(engineinstance.entities[0],entity) == collisionType.ABOVE){
+                          engineinstance.entities[0].correctPosition(entity);
+                          console.log("Collided with " + entity.elementid)
+                      }
+                    }
                 }
             }
             //Update the position
