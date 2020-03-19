@@ -13,6 +13,7 @@ class Entity {
         this.bottom = 0;
         this.alreadyfallen = false;
         this.type = type;
+        this.colliding = false;
     }
     updateposition(timefactor) {
         var element = document.getElementById(this.id);
@@ -43,6 +44,7 @@ class Entity {
         }
     }
     fixposition(platform) {
+        this.colliding = true;
         this.vy = platform.vy;
         this.y = platform.y + (platform.top - platform.bottom);
         this.correctsides();
@@ -76,10 +78,28 @@ class Entity {
             this.x + (this.right-this.left) > otherEntity.x &&
             this.y < otherEntity.y + (otherEntity.bottom-otherEntity.top) &&
             this.y + (this.bottom-this.top) > otherEntity.y) {
-                if(this.bottom > otherEntity.top){
+                if(this.bottom > otherEntity.top && this.vy > 0){ //cannot collide from above if you are going up.
                     return collisionType.ABOVE;
                 }
          }
          return collisionType.NONE;
+    }
+    jump(){
+        //check if you can jump
+        //acceleration will be gravity if you are touching a platform
+        if(this.colliding){
+            //perform the jump
+            document.getElementById(this.id).style.width = "30px";
+            document.getElementById(this.id).style.height = "20px";
+            this.ay = -4;
+            //stop the jump after x seconds
+            var player = this;
+            setTimeout(function(){ 
+                document.getElementById(player.id).style.width = "30px";
+                document.getElementById(player.id).style.height = "20px";
+                player.ay = PLAYERGRAVITY;
+            }, 500);
+            
+        }
     }
 }
