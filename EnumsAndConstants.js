@@ -1,5 +1,5 @@
 const GRAVITY = 3;
-const PLAYERGRAVITY = 4;
+const PLAYERGRAVITY = 6;
 
 const collisionType = {
     ABOVE: 0,

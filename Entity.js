@@ -91,7 +91,7 @@ class Entity {
             //perform the jump
             document.getElementById(this.id).style.width = "30px";
             document.getElementById(this.id).style.height = "20px";
-            this.ay = -4;
+            this.ay = -5;
             //stop the jump after x seconds
             var player = this;
             setTimeout(function(){ 
