@@ -1,6 +1,6 @@
 #container {
-  width: 800px;
-  height: 800px;
+  width: 1200px;
+  height: 900px;
   position: relative;
   background: lightblue;
 }
@@ -51,7 +51,7 @@
 
 .platform {
   width: 100px;
-  height: 10px;
+  height: 30px;
   position: absolute;
   border-style: double;
   border-radius: 10px;

@@ -1,11 +1,3 @@
-const MOVEMENT = {
-    NONE: 0,
-    LEFT: 1,
-    RIGHT: 2,
-    UP: 3,
-    DOWN: 4
-}
-
 // sets up button listeners for instructions button and modal
 $(function () {
   document.getElementById("instrBtn").addEventListener("click", function(){
@@ -100,7 +92,7 @@ class LogicController {
         //first check if any of the platforms are past the 100px mark
         for (var i = 0; i < engineinstance.entities.length; i++) {
             var entity = engineinstance.entities[i];
-            if(entity.elementid != "player" && entity.y > 100 && entity.alreadyfallen == false){
+            if(entity.id != "player" && entity.y > 100 && entity.alreadyfallen == false){
                 generatePlatforms = true;
                 break;
             }
@@ -119,7 +111,7 @@ class LogicController {
         for (var i = 0; i < engineinstance.entities.length; i++) {
             var timefactor = timeDifference/16.666;
             var entity = engineinstance.entities[i];
-            if(entity.elementid == "player"){
+            if(entity.id == "player"){
                 if(this.input == MOVEMENT.LEFT){
                     entity.ax = -1;
                 }
@@ -127,18 +119,19 @@ class LogicController {
                     entity.ax = 1;
                 }
                 else if(this.input == MOVEMENT.UP){
-                  document.getElementById(entity.elementid).style.width = "30px";
-                  document.getElementById(entity.elementid).style.height = "20px";
+                  document.getElementById(entity.id).style.width = "30px";
+                  document.getElementById(entity.id).style.height = "20px";
                   entity.ay = -2;
                 }
                 else if(this.input == MOVEMENT.DOWN){
                     //idk
                 }
                 else {
-                  document.getElementById(entity.elementid).style.width = "25px";
-                  document.getElementById(entity.elementid).style.height = "25px";
+                  document.getElementById(entity.id).style.width = "25px";
+                  document.getElementById(entity.id).style.height = "25px";
                   entity.ax = 0;
                   entity.vx = 0;
+                  entity.ay = PLAYERGRAVITY;
                 }
             }
             //Update the position
@@ -147,11 +140,29 @@ class LogicController {
             }
             //Is it out of bounds?
             engineinstance.boundsDetection(entity);
+
+            //Now check collisions if they are not the player
+            if(entity != engineinstance.entities[0]){
+              var collision = engineinstance.entities[0].collided(entity,5);
+              if(collision ==collisionType.ABOVE){
+                console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from above");
+                engineinstance.entities[0].fixposition(entity);
+              }
+              if(collision ==collisionType.FROMLEFT){
+                console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from left");
+                //engineinstance.entities[0].fixposition(entity);
+              }
+              if(collision ==collisionType.FROMRIGHT){
+                console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from right");
+                //engineinstance.entities[0].fixposition(entity);
+              }
+              if(collision ==collisionType.BELOW){
+                console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from below");
+                //engineinstance.entities[0].fixposition(entity);
+              }
+            }
         }
-        //TODO: need to figure out collisions here.
-
-        //TODO: resolve the collisions here.
-
+      
         //If this was the first frame, allow the following frames to update positions of entitites
         if(this.firstLoop){
           this.firstLoop = false;
