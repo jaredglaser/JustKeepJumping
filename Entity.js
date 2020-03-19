@@ -43,9 +43,8 @@ class Entity {
         }
     }
     fixposition(platform) {
-        var element = document.getElementById(this.id);
         this.vy = platform.vy;
-        this.y = platform.y;
+        this.y = platform.y + (platform.top - platform.bottom);
         this.correctsides();
     }
     correctsides() {
@@ -53,67 +52,34 @@ class Entity {
         //set the left, right, top, and bottom
         element.style.top = this.y + "px";
         element.style.left = this.x + "px";
-        var width = parseInt(element.style.width);
-        var height = parseInt(element.style.height);
+        var width, height;
+        switch(this.type){
+            case entityType.PLATFORM:
+                width = $(".platform").width();
+                height = $(".platform").height();
+                break;
+            case entityType.PLAYER:
+                width = $("#player").width();
+                height = $("#player").height();
+                break;
+            default:
+                break;
+        }
         this.left = this.x;
         this.right = this.x + width;
         this.top = this.y;
         this.bottom = this.y + height;
     }
     collided(otherEntity, threshold) {
-        //Handle directly above/below
-        if (this.left > otherEntity.left && this.right < otherEntity.right) {
-            //inside top side
-            if (this.top < otherEntity.top && this.bottom > otherEntity.top) {
-                return collisionType.ABOVE;
-            }
-            //inside bottom side
-            else if (this.top > otherEntity.top && this.bottom < otherEntity.top) {
-                return collisionType.BELOW;
-            }
-            //fully inside - treat as above
-            else if (this.top > otherEntity.top && this.bottom < otherEntity.bottom) {
-                return collisionType.ABOVE;
-            }
-        }
-        //Handle touching left side 
-        else if (this.left < otherEntity.left && this.right > otherEntity.left) {
-            if (this.right - threshold > otherEntity.left) {
-                if (this.top < otherEntity.top && this.bottom > otherEntity.top) {
+
+        if (this.x < otherEntity.x + (otherEntity.right-otherEntity.left) &&
+            this.x + (this.right-this.left) > otherEntity.x &&
+            this.y < otherEntity.y + (otherEntity.bottom-otherEntity.top) &&
+            this.y + (this.bottom-this.top) > otherEntity.y) {
+                if(this.bottom > otherEntity.top){
                     return collisionType.ABOVE;
                 }
-                else if (this.top < otherEntity.bottom && this.bottom > otherEntity.bottom) {
-                    return collisionType.BELOW;
-                }
-            }
-            //handle barely inside the left, we dont want to count this as an above
-            //check three conditions - partially above left , inside left, partially below left
-            else if ((this.bottom > otherEntity.top && this.bottom < otherEntity.bottom) ||
-                (this.top > otherEntity.top && this.bottom < otherEntity.bottom) ||
-                (this.top < otherEntity.bottom && this.bottom > otherEntity.bottom)){
-                return collisionType.FROMLEFT;
-            }
-        }
-        //Handle touching right side
-        else if (this.right > otherEntity.right && this.left < otherEntity.right) {
-            if (this.left + threshold > otherEntity.right) {
-                if (this.top < otherEntity.top && this.bottom > otherEntity.top) {
-                    return collisionType.ABOVE;
-                }
-                else if (this.top < otherEntity.bottom && this.bottom > otherEntity.bottom) {
-                    return collisionType.BELOW;
-                }
-            }
-            //handle barely inside the right, we dont want to count this as an above
-            //check three conditions - partially above right , inside right, partially below right
-            else if ((this.top < otherEntity.top && this.bottom > otherEntity.top) ||
-                (this.top > otherEntity.top && this.bottom < otherEntity.bottom) ||
-                (this.top < otherEntity.bottom && this.bottom > otherEntity.bottom)) {
-                return collisionType.FROMRIGHT;
-            }
-        }
-        else {
-            return collisionType.NONE;
-        }
+         }
+         return collisionType.NONE;
     }
 }

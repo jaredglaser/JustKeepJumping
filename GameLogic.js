@@ -180,7 +180,7 @@ class LogicController {
           //make a new div
           if(testingplatformarray[i]){
             var id = this.create_UUID();
-            $("#container").append("<div id=" + id + " class=platform></div>");
+            $("#container").append($("<div></div>").attr({"id":id,"class":"platform"}));
             var platform = new Entity(id,entityType.PLATFORM);
             platform.x = i*100;
             platform.y = 0;
