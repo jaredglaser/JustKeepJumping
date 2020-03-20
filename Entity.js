@@ -19,6 +19,10 @@ class Entity {
         var element = document.getElementById(this.id);
 
         //determine the new x and y
+        this.ay = this.ay + 1;
+        if (this.ay > 3) {
+            this.ay = 3;
+        }
         this.vy = this.vy + (this.ay * timefactor);
         this.vx = this.vx + (this.ax * timefactor);
         this.x = this.x + (this.vx * timefactor);

@@ -4,12 +4,19 @@
   position: relative;
   background: lightblue;
 }
+
 #player {
   width: 25px;
   height: 25px;
   position: absolute;
-  background-color: darkblue;
   visibility: hidden;
+}
+
+#playerSprite {
+  height: 57px;
+  width: 48px;
+  background: 
+  url('assets/images/playerSprite.png') 0px 0px;
 }
 
 .page-header {

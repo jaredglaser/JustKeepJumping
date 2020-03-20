@@ -11,6 +11,23 @@ $(function () {
 });
 
 
+var tID; //we will use this variable to clear the setInterval()
+function animateScript() {
+  var position = 48; //start position for the image slicer
+  const  interval = 100; //100 ms of interval for the setInterval()
+  tID = setInterval ( () => {
+  document.getElementById("playerSprite").style.backgroundPosition = 
+  `-${position}px 0px`; 
+  //we use the ES6 template literal to insert the variable "position"
+  if (position < 144)
+  { position = position + 48;}
+  //we increment the position by 256 each time
+  else
+  { position = 48; }
+  //reset the position to 256px, once position exceeds 1536px
+  }
+  , interval );
+}
 
 function startGame() {
 
@@ -21,6 +38,7 @@ function startGame() {
   var logicController1 = new LogicController();
   var engine1 = new Engine([player1], logicController1);
   window.addEventListener("keydown", function (event) {
+    animateScript();
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }
