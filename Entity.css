@@ -10,6 +10,7 @@
   height: 25px;
   position: absolute;
   visibility: hidden;
+  background: darkblue;
 }
 
 #playerSprite {

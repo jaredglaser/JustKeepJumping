@@ -140,15 +140,15 @@ class LogicController {
           engineinstance.entities[0].fixposition(entity);
         }
         if (collision == collisionType.FROMLEFT) {
-          console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from left");
+          //console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from left");
           //engineinstance.entities[0].fixposition(entity);
         }
         if (collision == collisionType.FROMRIGHT) {
-          console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from right");
+          //console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from right");
           //engineinstance.entities[0].fixposition(entity);
         }
         if (collision == collisionType.BELOW) {
-          console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from below");
+          //console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from below");
           //engineinstance.entities[0].fixposition(entity);
         }
       }
@@ -164,17 +164,15 @@ class LogicController {
           entity.ax = 1;
         }
         else if (this.input == MOVEMENT.UP) {
-          entity.jump();
+          //entity.jump();
+          //console.log("here");
         }
         else if (this.input == MOVEMENT.DOWN) {
           //idk
         }
         else {
-          document.getElementById(entity.id).style.width = "25px";
-          document.getElementById(entity.id).style.height = "25px";
           entity.ax = 0;
           entity.vx = 0;
-          entity.ay = PLAYERGRAVITY;
         }
       }
       //Update the position
@@ -205,7 +203,7 @@ class LogicController {
           $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
           var platform = new Entity(id, entityType.PLATFORM);
           platform.x = i * 100;
-          platform.y = 0;
+          platform.y = -100;
           var element = document.getElementById(id);
           element.style.top = toString(platform.y) + "px";
           element.style.left = toString(platform.x) + "px";

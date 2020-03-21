@@ -1,7 +1,7 @@
 class Entity {
     constructor(id, type) {
         this.id = id;
-        this.ay = GRAVITY;
+        this.ay = 0;
         this.ax = 0;
         this.vx = 0;
         this.vy = 0;
@@ -19,15 +19,23 @@ class Entity {
         var element = document.getElementById(this.id);
 
         //determine the new x and y
-        this.ay = this.ay + 1;
-        if (this.ay > 3) {
-            this.ay = 3;
+        if (this.type == entityType.PLAYER) {
+            this.ay = this.ay + 2;
+        }
+        else {
+            this.ay = this.ay + .5;
         }
         this.vy = this.vy + (this.ay * timefactor);
         this.vx = this.vx + (this.ax * timefactor);
         this.x = this.x + (this.vx * timefactor);
         this.y = this.y + (this.vy * timefactor);
-        this.limitspeed(this.id.includes("player"));
+        if (this.ay > 3) {
+            this.ay = 3;
+        }
+        if (this.vy > 3) {
+            this.vy = 3;
+        }
+        //this.limitspeed(this.id.includes("player"));
         this.correctsides();
 
     }
@@ -52,6 +60,7 @@ class Entity {
         this.vy = platform.vy;
         this.y = platform.y + (platform.top - platform.bottom);
         this.correctsides();
+        this.jump();
     }
     correctsides() {
         var element = document.getElementById(this.id);
@@ -95,7 +104,7 @@ class Entity {
             //perform the jump
             document.getElementById(this.id).style.width = "30px";
             document.getElementById(this.id).style.height = "20px";
-            this.ay = -5;
+            this.ay = -10;
             //stop the jump after x seconds
             var player = this;
             setTimeout(function(){ 
