@@ -20,7 +20,7 @@ class Entity {
 
         //determine the new x and y
         if (this.type == entityType.PLAYER) {
-            this.ay = this.ay + 2;
+            this.ay = this.ay + 5;
         }
         else {
             this.ay = this.ay + .5;
@@ -29,31 +29,43 @@ class Entity {
         this.vx = this.vx + (this.ax * timefactor);
         this.x = this.x + (this.vx * timefactor);
         this.y = this.y + (this.vy * timefactor);
-        if (this.ay > 3) {
+        /*if (this.ay > 3) {
             this.ay = 3;
         }
         if (this.vy > 3) {
             this.vy = 3;
         }
-        //this.limitspeed(this.id.includes("player"));
+        */
+        this.limitspeed(this.id.includes("player"));
         this.correctsides();
 
     }
     limitspeed(isplayer){
-        var maxspeed = isplayer?PLAYERGRAVITY:GRAVITY;
-        if(this.vy < 0){
-            this.vy = Math.max(this.vy,-1 * maxspeed);
+        var maxdownspeed = isplayer?PLAYERGRAVITY:GRAVITY;
+        var maxspeed = isplayer?-PLAYERMAX:-GRAVITY;
+        if(this.ay < 0){
+            this.ay = Math.max(this.ay,maxspeed);
         }
         else{
-            this.vy = Math.min(this.vy, maxspeed);
+            this.ay = Math.min(this.ay, maxdownspeed);
         }
 
-        if(this.vx < 0){
-            this.vx = Math.max(this.vx,-1 * maxspeed);
+        if(this.vy < 0){
+            this.vy = Math.max(this.vy, maxspeed);
         }
         else{
-            this.vx = Math.min(this.vx, maxspeed);
+            this.vy = Math.min(this.vy, maxdownspeed);
         }
+        if(isplayer){
+        if(this.vx < 0){
+            this.vx = Math.max(this.vx, maxspeed);
+        }
+        else{
+            this.vx = Math.min(this.vx, -1*maxspeed);
+        }
+    }
+
+        
     }
     fixposition(platform) {
         this.colliding = true;
@@ -104,7 +116,7 @@ class Entity {
             //perform the jump
             document.getElementById(this.id).style.width = "30px";
             document.getElementById(this.id).style.height = "20px";
-            this.ay = -10;
+            this.ay = -30;
             //stop the jump after x seconds
             var player = this;
             setTimeout(function(){ 
