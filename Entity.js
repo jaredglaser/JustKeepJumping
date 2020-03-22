@@ -20,7 +20,7 @@ class Entity {
 
         //determine the new x and y
         if (this.type == entityType.PLAYER) {
-            this.ay = this.ay + 5;
+            this.ay = this.ay + .6;
         }
         else {
             this.ay = this.ay + .5;
@@ -72,6 +72,7 @@ class Entity {
         this.vy = platform.vy;
         this.y = platform.y + (platform.top - platform.bottom);
         this.correctsides();
+        console.log("player jumped");
         this.jump();
     }
     correctsides() {
