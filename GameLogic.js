@@ -195,7 +195,19 @@ class LogicController {
 
   spawnEntities(platformSpawnTime, engineinstance) {
     if (platformSpawnTime) {
-      var testingplatformarray = [1, 1, 1, 0, 0, 1, 1, 0];
+      var x = Math.floor((Math.random() * 4) + 1);
+      if (x == 1) {
+        var testingplatformarray = [1, 0, 1, 0, 0, 1, 1, 0];
+      }
+      else if (x == 2) {
+        var testingplatformarray = [0, 1, 0, 1, 0, 1, 0, 0];
+      }
+      else if (x == 3) {
+        var testingplatformarray = [0, 1, 0, 1, 0, 0, 1, 0];
+      }
+      else if (x == 4) {
+        var testingplatformarray = [0, 1, 0, 1, 1, 0, 0, 1];
+      }
       for (var i = 0; i < testingplatformarray.length; i++) {
         //make a new div
         if (testingplatformarray[i]) {
@@ -203,7 +215,7 @@ class LogicController {
           $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
           var platform = new Entity(id, entityType.PLATFORM);
           platform.x = i * 100;
-          platform.y = -100;
+          platform.y = (Math.floor((Math.random() * 800) + 1))*(-1);;
           var element = document.getElementById(id);
           element.style.top = toString(platform.y) + "px";
           element.style.left = toString(platform.x) + "px";
