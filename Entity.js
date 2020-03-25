@@ -108,17 +108,9 @@ class Entity {
         //acceleration will be gravity if you are touching a platform
         if(this.colliding){
             //perform the jump
-            document.getElementById(this.id).style.width = "30px";
-            document.getElementById(this.id).style.height = "20px";
             this.ay = -30;
             //stop the jump after x seconds
             var player = this;
-            setTimeout(function(){ 
-                document.getElementById(player.id).style.width = "30px";
-                document.getElementById(player.id).style.height = "20px";
-                player.ay = PLAYERGRAVITY;
-            }, 500);
-            
         }
     }
 }

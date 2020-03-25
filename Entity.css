@@ -3,22 +3,16 @@
   width: 60%;
   height: 100vh;
   position: relative;
-  background: lightblue;
+  background: url('assets/images/gameBackground.png') 0px 0px;
+  background-repeat: no-repeat;
 }
 
 #player {
-  width: 25px;
-  height: 25px;
+  width: 57px;
+  height: 48px;
   position: absolute;
   visibility: hidden;
-  background: darkblue;
-}
-
-#playerSprite {
-  height: 57px;
-  width: 48px;
-  background: 
-  url('assets/images/playerSprite.png') 0px 0px;
+  background:url('assets/images/playerSprite.png') 0px 0px;
 }
 
 .page-header {
@@ -62,8 +56,5 @@
   width: 100px;
   height: 30px;
   position: absolute;
-  border-style: double;
-  border-radius: 10px;
-  border-color: yellow;
-  background-color: purple;
+  background:url('assets/images/platforms.png');
 }
