@@ -198,29 +198,35 @@ class LogicController {
       var x = Math.floor((Math.random() * 4) + 1);
       if (x == 1) {
         var testingplatformarray = [1, 0, 1, 0, 0, 1, 1, 0];
+        var platformArrayYAxis = [-100, 0, -500, 0, 0, -300, -800, 0];
       }
       else if (x == 2) {
         var testingplatformarray = [0, 1, 0, 1, 0, 1, 0, 0];
+        var platformArrayYAxis = [0, -300, 0, -800, 0, -500, 0, 0];
       }
       else if (x == 3) {
         var testingplatformarray = [0, 1, 0, 1, 0, 0, 1, 0];
+        var platformArrayYAxis = [0, -800, 0, -200, 0, 0, -600, 0];
       }
       else if (x == 4) {
         var testingplatformarray = [0, 1, 0, 1, 1, 0, 0, 1];
+        var platformArrayYAxis = [0, -100, 0, -400, -700, 0, 0, -200];
       }
       for (var i = 0; i < testingplatformarray.length; i++) {
         //make a new div
+        var j = 0;
         if (testingplatformarray[i]) {
           var id = this.create_UUID();
           $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
           var platform = new Entity(id, entityType.PLATFORM);
           platform.x = i * 100;
-          platform.y = (Math.floor((Math.random() * 800) + 1))*(-1);;
+          platform.y = platformArrayYAxis[j];
           var element = document.getElementById(id);
           element.style.top = toString(platform.y) + "px";
           element.style.left = toString(platform.x) + "px";
           engineinstance.entities.push(platform);
         }
+        j++;
       }
     }
   }
