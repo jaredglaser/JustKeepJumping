@@ -29,13 +29,6 @@ class Entity {
         this.vx = this.vx + (this.ax * timefactor);
         this.x = this.x + (this.vx * timefactor);
         this.y = this.y + (this.vy * timefactor);
-        /*if (this.ay > 3) {
-            this.ay = 3;
-        }
-        if (this.vy > 3) {
-            this.vy = 3;
-        }
-        */
         this.limitspeed(this.id.includes("player"));
         this.correctsides();
 

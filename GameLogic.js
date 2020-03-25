@@ -195,38 +195,35 @@ class LogicController {
 
   spawnEntities(platformSpawnTime, engineinstance) {
     if (platformSpawnTime) {
-      var x = Math.floor((Math.random() * 4) + 1);
-      if (x == 1) {
-        var testingplatformarray = [1, 0, 1, 0, 0, 1, 1, 0];
-        var platformArrayYAxis = [-100, 0, -500, 0, 0, -300, -800, 0];
+      var platformArrayYAxis = [-200, -400, -600, -800]
+      var screenWidth = $("#container").width();
+      var arrayLength = Math.floor(screenWidth / 100)
+      var testingplatformarray = [];
+      for (var i = 0; i < arrayLength; i++) {
+        var xSelect = Math.round(Math.random());
+        var zeroCounter = 0;
+        if (xSelect == 0) {
+          zeroCounter++;
+        }
+        if (zeroCounter > Math.floor(arrayLength/3)) {
+          xSelect = 1;
+        }
+        testingplatformarray[i] = xSelect;
       }
-      else if (x == 2) {
-        var testingplatformarray = [0, 1, 0, 1, 0, 1, 0, 0];
-        var platformArrayYAxis = [0, -300, 0, -800, 0, -500, 0, 0];
-      }
-      else if (x == 3) {
-        var testingplatformarray = [0, 1, 0, 1, 0, 0, 1, 0];
-        var platformArrayYAxis = [0, -800, 0, -200, 0, 0, -600, 0];
-      }
-      else if (x == 4) {
-        var testingplatformarray = [0, 1, 0, 1, 1, 0, 0, 1];
-        var platformArrayYAxis = [0, -100, 0, -400, -700, 0, 0, -200];
-      }
-      for (var i = 0; i < testingplatformarray.length; i++) {
+      for (var i = 0; i < arrayLength; i++) {
         //make a new div
-        var j = 0;
         if (testingplatformarray[i]) {
+          var ySelect = Math.floor(Math.random() * 4);
           var id = this.create_UUID();
           $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
           var platform = new Entity(id, entityType.PLATFORM);
           platform.x = i * 100;
-          platform.y = platformArrayYAxis[j];
+          platform.y = platformArrayYAxis[ySelect];
           var element = document.getElementById(id);
           element.style.top = toString(platform.y) + "px";
           element.style.left = toString(platform.x) + "px";
           engineinstance.entities.push(platform);
         }
-        j++;
       }
     }
   }
