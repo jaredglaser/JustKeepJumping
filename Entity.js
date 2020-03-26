@@ -5,8 +5,8 @@ class Entity {
         this.ax = 0;
         this.vx = 0;
         this.vy = 0;
-        this.x = 0;
-        this.y = 0;
+        this.x = $("#container").width()/2;
+        this.y = $("#container").height() - 357;
         this.left = 0;
         this.right = 0;
         this.top = 0;

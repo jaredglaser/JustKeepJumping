@@ -103,26 +103,30 @@ class LogicController {
     var timeDifference = timestamp - this.lasttimestamp;
     this.lasttimestamp = timestamp;
     var generatePlatforms = false;
-    if (engineinstance.entities.length == 1) { //was the game just started?
-      generatePlatforms = true;
+    if (this.firstLoop) { //was the game just started?
+      this.spawnEntities(engineinstance);
     }
     //first check if any of the platforms are past the 100px mark
-    for (var i = 0; i < engineinstance.entities.length; i++) {
-      var entity = engineinstance.entities[i];
-      if (entity.id != "player" && entity.y > 100 && entity.alreadyfallen == false) {
-        generatePlatforms = true;
-        break;
+    else {
+      for (var i = 0; i < engineinstance.entities.length; i++) {
+        var entity = engineinstance.entities[i];
+        if (entity.id != "player" && entity.y > 100 && entity.alreadyfallen == false) {
+          generatePlatforms = true;
+          break;
+        }
+      }
+      if (generatePlatforms) {
+        //now set the already fallen flag on all of them
+        engineinstance.entities.map(function (x) {
+          x.alreadyfallen = true;
+          return x
+        });
+      }
+      //if new platforms need to be added, add them now
+      if (generatePlatforms) {
+        this.spawnEntities(engineinstance);
       }
     }
-    if (generatePlatforms) {
-      //now set the already fallen flag on all of them
-      engineinstance.entities.map(function (x) {
-        x.alreadyfallen = true;
-        return x
-      });
-    }
-    //if new platforms need to be added, add them now
-    this.spawnEntities(generatePlatforms, engineinstance);
 
     //set colliding to false for the players
     engineinstance.entities[0].colliding = false;
@@ -192,11 +196,41 @@ class LogicController {
     });
   }
 
-  spawnEntities(platformSpawnTime, engineinstance) {
-    if (platformSpawnTime) {
+  spawnEntities(engineinstance) {
+    var screenWidth = $("#container").width();
+    var screenHeight = $("#container").height();
+    var arrayLength = Math.floor(screenWidth / 100)
+    if (this.firstLoop) {
+      var platformArrayYAxis = [screenHeight/4, screenHeight/3, screenHeight/2, screenHeight]
+      var testingplatformarray = [];
+      for (var i = 0; i < arrayLength; i++) {
+        testingplatformarray[i] = 1;
+      }
+      for (var i = 0; i < arrayLength; i++) {
+        //make a new div
+        if (testingplatformarray[i]) {
+          var ySelect = Math.floor(Math.random() * 4);
+          var id = this.create_UUID();
+          $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
+          var platform = new Entity(id, entityType.PLATFORM);
+          if ( i == 0) {
+            platform.x = screenWidth/2;
+            platform.y = screenHeight - 300;
+          }
+          else {
+            platform.x = i * 100;
+            platform.y = platformArrayYAxis[ySelect];
+          }
+          var element = document.getElementById(id);
+          element.style.top = toString(platform.y) + "px";
+          element.style.left = toString(platform.x) + "px";
+          engineinstance.entities.push(platform);
+        }
+      }
+    }
+
+    else {
       var platformArrayYAxis = [-200, -400, -600, -800]
-      var screenWidth = $("#container").width();
-      var arrayLength = Math.floor(screenWidth / 100)
       var testingplatformarray = [];
       for (var i = 0; i < arrayLength; i++) {
         var xSelect = Math.round(Math.random());
