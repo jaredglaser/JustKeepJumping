@@ -56,10 +56,8 @@ class Engine {
             this.entities.splice(this.entities.indexOf(entity),1);
         }
         else{
-        element.style.top = "0px";
-        element.style.left = "0px";
-        entity.x = 0;
-        entity.y = 0;
+            document.getElementById("player").style.visibility = "hidden";
+            document.getElementById("GO-header").style.visibility = "visible";
         }
     }
 }

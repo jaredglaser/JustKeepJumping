@@ -111,6 +111,9 @@ class Entity {
             this.ay = -30;
             //stop the jump after x seconds
             var player = this;
+            setTimeout(function(){ 
+                player.ay = PLAYERGRAVITY;
+            }, 500);
         }
     }
 }

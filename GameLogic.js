@@ -168,7 +168,6 @@ class LogicController {
         }
         else if (this.input == MOVEMENT.UP) {
           //entity.jump();
-          //console.log("here");
         }
         else if (this.input == MOVEMENT.DOWN) {
           //idk
@@ -201,7 +200,7 @@ class LogicController {
     var screenHeight = $("#container").height();
     var arrayLength = Math.floor(screenWidth / 100)
     if (this.firstLoop) {
-      var platformArrayYAxis = [screenHeight/4, screenHeight/3, screenHeight/2, screenHeight]
+      var platformArrayYAxis = [screenHeight/4, screenHeight/3, screenHeight/2]
       var testingplatformarray = [];
       for (var i = 0; i < arrayLength; i++) {
         testingplatformarray[i] = 1;
@@ -209,7 +208,7 @@ class LogicController {
       for (var i = 0; i < arrayLength; i++) {
         //make a new div
         if (testingplatformarray[i]) {
-          var ySelect = Math.floor(Math.random() * 4);
+          var ySelect = Math.floor(Math.random() * 3);
           var id = this.create_UUID();
           $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
           var platform = new Entity(id, entityType.PLATFORM);
@@ -230,23 +229,17 @@ class LogicController {
     }
 
     else {
-      var platformArrayYAxis = [-200, -400, -600, -800]
+      var platformArrayYAxis = [-50, -250, -450]
       var testingplatformarray = [];
+      var zeroCounter = 0;
       for (var i = 0; i < arrayLength; i++) {
         var xSelect = Math.round(Math.random());
-        var zeroCounter = 0;
-        if (xSelect == 0) {
-          zeroCounter++;
-        }
-        if (zeroCounter > Math.floor(arrayLength/3)) {
-          xSelect = 1;
-        }
         testingplatformarray[i] = xSelect;
       }
       for (var i = 0; i < arrayLength; i++) {
         //make a new div
         if (testingplatformarray[i]) {
-          var ySelect = Math.floor(Math.random() * 4);
+          var ySelect = Math.floor(Math.random() * 3);
           var id = this.create_UUID();
           $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
           var platform = new Entity(id, entityType.PLATFORM);
