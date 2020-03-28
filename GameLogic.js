@@ -201,7 +201,7 @@ class LogicController {
       ySelect = Math.random()*screenHeight;
       var tooclose = false;
       for(var i = 0; i < engineinstance.entities.length; i++){
-          if(Math.pow(engineinstance.entities[i].x-xSelect,2)+Math.pow(engineinstance.entities[i].y-ySelect)<10000){
+          if(Math.abs(engineinstance.entities[i].x-xSelect) <= 100 && Math.abs(engineinstance.entities[i].y-ySelect) <=50){
             tooclose = true;
             break;
           }
