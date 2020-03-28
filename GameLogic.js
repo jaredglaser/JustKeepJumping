@@ -28,7 +28,12 @@ function animateScript() {
   , interval );
 }
 
+var keydown;
+var keyup;
+
 function resetGame() {
+  document.removeEventListener("keydown", keydown, true);
+  document.removeEventListener("keyup", keyup, true);
   document.getElementById("GO-header").style.visibility = "hidden";
   startGame();
 }
@@ -41,12 +46,12 @@ function startGame() {
   var player1 = new Entity("player", entityType.PLAYER);
   var logicController1 = new LogicController();
   var engine1 = new Engine([player1], logicController1);
-  document.addEventListener("keydown", function (event) {
+  keydown = function (event) {
     animateScript();
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }
-
+  
     switch (event.key) {
       case "ArrowDown":
         logicController1.input = MOVEMENT.DOWN;
@@ -63,15 +68,15 @@ function startGame() {
       default:
         return; // Quit when this doesn't handle the key event.
     }
-
+  
     // Cancel the default action to avoid it being handled twice
     event.preventDefault();
-  }, true);
-  document.addEventListener("keyup", function (event) {
+  }
+  keyup = function (event) {
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }
-
+  
     switch (event.key) {
       case "ArrowDown":
         logicController1.input = MOVEMENT.NONE;
@@ -88,10 +93,12 @@ function startGame() {
       default:
         return; // Quit when this doesn't handle the key event.
     }
-
+  
     // Cancel the default action to avoid it being handled twice
     event.preventDefault();
-  }, true);
+  }
+  document.addEventListener("keydown", keydown, true);
+  document.addEventListener("keyup", keyup, true);
   engine1.init();
 }
 
