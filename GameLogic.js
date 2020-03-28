@@ -28,6 +28,11 @@ function animateScript() {
   , interval );
 }
 
+function resetGame() {
+  document.getElementById("GO-header").style.visibility = "hidden";
+  startGame();
+}
+
 function startGame() {
 
   document.getElementById("player").style.visibility = "visible";
@@ -36,7 +41,7 @@ function startGame() {
   var player1 = new Entity("player", entityType.PLAYER);
   var logicController1 = new LogicController();
   var engine1 = new Engine([player1], logicController1);
-  window.addEventListener("keydown", function (event) {
+  document.addEventListener("keydown", function (event) {
     animateScript();
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
@@ -62,7 +67,7 @@ function startGame() {
     // Cancel the default action to avoid it being handled twice
     event.preventDefault();
   }, true);
-  window.addEventListener("keyup", function (event) {
+  document.addEventListener("keyup", function (event) {
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }

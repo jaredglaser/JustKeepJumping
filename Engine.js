@@ -56,7 +56,12 @@ class Engine {
             this.entities.splice(this.entities.indexOf(entity),1);
         }
         else{
-            document.getElementById("player").style.visibility = "hidden";
+            for (var i = this.entities.length - 1; i > -1; i--) {
+                if (i != 0) {
+                    document.getElementById(this.entities[i].id).remove();
+                }
+                this.entities.splice(this.entities.indexOf(this.entities[i]),1);
+            }
             document.getElementById("GO-header").style.visibility = "visible";
         }
     }
