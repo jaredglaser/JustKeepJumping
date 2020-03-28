@@ -166,6 +166,7 @@ class LogicController {
       var entity = engineinstance.entities[i];
       if (entity.id == "player") {
         if (this.input == MOVEMENT.LEFT) {
+          console.log("here2");
           entity.ax = -1;
         }
         else if (this.input == MOVEMENT.RIGHT) {
