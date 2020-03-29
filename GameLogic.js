@@ -13,19 +13,17 @@ $(function () {
 var tID; //we will use this variable to clear the setInterval()
 function animateScript() {
   var position = 48; //start position for the image slicer
-  const  interval = 100; //100 ms of interval for the setInterval()
-  tID = setInterval ( () => {
-  document.getElementById("player").style.backgroundPosition = 
-  `-${position}px 0px`; 
-  //we use the ES6 template literal to insert the variable "position"
-  if (position < 144)
-  { position = position + 48;}
-  //we increment the position by 256 each time
-  else
-  { position = 48; }
-  //reset the position to 256px, once position exceeds 1536px
+  const interval = 100; //100 ms of interval for the setInterval()
+  tID = setInterval(() => {
+    document.getElementById("player").style.backgroundPosition =
+      `-${position}px 0px`;
+    //we use the ES6 template literal to insert the variable "position"
+    if (position < 144) { position = position + 48; }
+    //we increment the position by 256 each time
+    else { position = 48; }
+    //reset the position to 256px, once position exceeds 1536px
   }
-  , interval );
+    , interval);
 }
 
 var keydown;
@@ -107,6 +105,7 @@ function startGame() {
 class LogicController {
   constructor() {
     this.lasttimestamp = 0;
+    this.lastSpawn = 0;
     this.input = 0;
     this.firstLoop = true;
   }
@@ -114,19 +113,15 @@ class LogicController {
   gameloop(timestamp, engineinstance) {
     var timeDifference = timestamp - this.lasttimestamp;
     this.lasttimestamp = timestamp;
-    var generatePlatforms = false;
+    var generatePlatforms = (MAXPLAT > engineinstance.entities.length - 1) && (timestamp - this.lastSpawn > 200);
     if (this.firstLoop) { //was the game just started?
-      this.spawnEntities(engineinstance);
+      for(var i = 0; i < MAXPLAT/2; i++){
+        this.spawnEntities(engineinstance,true);
+        this.spawnEntities(engineinstance,false);
+      }
     }
     //first check if any of the platforms are past the 100px mark
     else {
-      for (var i = 0; i < engineinstance.entities.length; i++) {
-        var entity = engineinstance.entities[i];
-        if (entity.id != "player" && entity.y > 100 && entity.alreadyfallen == false) {
-          generatePlatforms = true;
-          break;
-        }
-      }
       if (generatePlatforms) {
         //now set the already fallen flag on all of them
         engineinstance.entities.map(function (x) {
@@ -136,7 +131,7 @@ class LogicController {
       }
       //if new platforms need to be added, add them now
       if (generatePlatforms) {
-        this.spawnEntities(engineinstance);
+        this.spawnEntities(engineinstance,false);
       }
     }
 
@@ -208,72 +203,46 @@ class LogicController {
     });
   }
 
-  spawnEntities(engineinstance) {
-    var screenWidth = $("#container").width();
-    var screenHeight = $("#container").height();
-    var arrayLength = Math.floor(screenWidth / 100)
-    if (this.firstLoop) {
-      var platformArrayYAxis = [screenHeight/4, screenHeight/3, screenHeight/2]
-      var testingplatformarray = [];
-      for (var i = 0; i < arrayLength; i++) {
-        testingplatformarray[i] = 1;
+  spawnEntities(engineinstance,isFirst) {
+    var screenWidth = ($("#container").width()-100);
+    var screenHeight = ($("#container").height()-30);
+    var ySelect;
+    var xSelect;
+    var id = this.create_UUID();
+    while(true){
+      xSelect = Math.random()*screenWidth;
+      ySelect = isFirst?1*(Math.random()*screenHeight):-1*(Math.random()*screenHeight);
+      var tooclose = false;
+      for(var i = 0; i < engineinstance.entities.length; i++){
+          if(Math.abs((engineinstance.entities[i].x-(xSelect)) <= 100) &&
+           Math.abs((engineinstance.entities[i].y)-(ySelect)) <=50){
+            tooclose = true;
+            break;
+          }
       }
-      for (var i = 0; i < arrayLength; i++) {
-        //make a new div
-        if (testingplatformarray[i]) {
-          var ySelect = Math.floor(Math.random() * 3);
-          var id = this.create_UUID();
-          $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
-          var platform = new Entity(id, entityType.PLATFORM);
-          if ( i == 0) {
-            platform.x = screenWidth/2;
-            platform.y = screenHeight - 300;
-          }
-          else {
-            platform.x = i * 100;
-            platform.y = platformArrayYAxis[ySelect];
-          }
-          var element = document.getElementById(id);
-          element.style.top = toString(platform.y) + "px";
-          element.style.left = toString(platform.x) + "px";
-          engineinstance.entities.push(platform);
-        }
+      if(!tooclose){ //we found a proper location
+        break;
       }
     }
-
-    else {
-      var platformArrayYAxis = [-50, -250, -450]
-      var testingplatformarray = [];
-      var zeroCounter = 0;
-      for (var i = 0; i < arrayLength; i++) {
-        var xSelect = Math.round(Math.random());
-        testingplatformarray[i] = xSelect;
-      }
-      for (var i = 0; i < arrayLength; i++) {
-        //make a new div
-        if (testingplatformarray[i]) {
-          var ySelect = Math.floor(Math.random() * 3);
-          var id = this.create_UUID();
-          $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
-          var platform = new Entity(id, entityType.PLATFORM);
-          platform.x = i * 100;
-          platform.y = platformArrayYAxis[ySelect];
-          var element = document.getElementById(id);
-          element.style.top = toString(platform.y) + "px";
-          element.style.left = toString(platform.x) + "px";
-          engineinstance.entities.push(platform);
-        }
-      }
-    }
+    $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
+    var platform = new Entity(id, entityType.PLATFORM);
+    platform.x = xSelect;
+    platform.y = ySelect;
+    var element = document.getElementById(id);
+    element.style.top = toString(platform.y) + "px";
+    element.style.left = toString(platform.x) + "px";
+    
+    engineinstance.entities.push(platform);
   }
 
-  create_UUID() {
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (dt + Math.random() * 16) % 16 | 0;
-      dt = Math.floor(dt / 16);
-      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return uuid;
-  }
+
+create_UUID() {
+  var dt = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+  return uuid;
+}
 }
