@@ -103,8 +103,9 @@ class LogicController {
     this.lasttimestamp = timestamp;
     var generatePlatforms = (MAXPLAT > engineinstance.entities.length - 1) && (timestamp - this.lastSpawn > 200);
     if (this.firstLoop) { //was the game just started?
-      for(var i = 0; i < MAXPLAT; i++){
-        this.spawnEntities(engineinstance);
+      for(var i = 0; i < MAXPLAT/2; i++){
+        this.spawnEntities(engineinstance,true);
+        this.spawnEntities(engineinstance,false);
       }
     }
     //first check if any of the platforms are past the 100px mark
@@ -118,7 +119,7 @@ class LogicController {
       }
       //if new platforms need to be added, add them now
       if (generatePlatforms) {
-        this.spawnEntities(engineinstance);
+        this.spawnEntities(engineinstance,false);
       }
     }
 
@@ -190,18 +191,19 @@ class LogicController {
     });
   }
 
-  spawnEntities(engineinstance) {
-    var screenWidth = $("#container").width();
-    var screenHeight = $("#container").height();
+  spawnEntities(engineinstance,isFirst) {
+    var screenWidth = ($("#container").width()-100);
+    var screenHeight = ($("#container").height()-30);
     var ySelect;
     var xSelect;
     var id = this.create_UUID();
     while(true){
       xSelect = Math.random()*screenWidth;
-      ySelect = Math.random()*screenHeight;
+      ySelect = isFirst?1*(Math.random()*screenHeight):-1*(Math.random()*screenHeight);
       var tooclose = false;
       for(var i = 0; i < engineinstance.entities.length; i++){
-          if(Math.abs(engineinstance.entities[i].x-xSelect) <= 100 && Math.abs(engineinstance.entities[i].y-ySelect) <=50){
+          if(Math.abs((engineinstance.entities[i].x-(xSelect)) <= 100) &&
+           Math.abs((engineinstance.entities[i].y)-(ySelect)) <=50){
             tooclose = true;
             break;
           }
