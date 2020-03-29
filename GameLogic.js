@@ -108,9 +108,11 @@ class LogicController {
     this.lastSpawn = 0;
     this.input = 0;
     this.firstLoop = true;
+    this.gameOver = false;
   }
 
   gameloop(timestamp, engineinstance) {
+    console.log(this.firstLoop);
     var timeDifference = timestamp - this.lasttimestamp;
     this.lasttimestamp = timestamp;
     var generatePlatforms = (MAXPLAT > engineinstance.entities.length - 1) && (timestamp - this.lastSpawn > 200);
@@ -168,7 +170,6 @@ class LogicController {
       var entity = engineinstance.entities[i];
       if (entity.id == "player") {
         if (this.input == MOVEMENT.LEFT) {
-          console.log("here2");
           entity.ax = -1;
         }
         else if (this.input == MOVEMENT.RIGHT) {
@@ -193,14 +194,17 @@ class LogicController {
       engineinstance.boundsDetection(entity);
     }
 
+
     //If this was the first frame, allow the following frames to update positions of entitites
     if (this.firstLoop) {
       this.firstLoop = false;
     }
     var gamelogicinstance = this;
-    requestAnimationFrame(function (timestamp) {
-      gamelogicinstance.gameloop(timestamp, engineinstance);
-    });
+    if (!this.gameOver) {
+      requestAnimationFrame(function (timestamp) {
+        gamelogicinstance.gameloop(timestamp, engineinstance);
+      });
+    }
   }
 
   spawnEntities(engineinstance,isFirst) {

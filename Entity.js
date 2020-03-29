@@ -6,7 +6,7 @@ class Entity {
         this.vx = 0;
         this.vy = 0;
         this.x = $("#container").width()/2;
-        this.y = $("#container").height() - 357;
+        this.y = ($("#container").height()/2) - 100;
         this.left = 0;
         this.right = 0;
         this.top = 0;

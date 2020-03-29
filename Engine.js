@@ -63,6 +63,7 @@ class Engine {
                 this.entities.splice(this.entities.indexOf(this.entities[i]),1);
             }
             document.getElementById("GO-header").style.visibility = "visible";
+            this.logicController.gameOver = true;
         }
     }
 }
