@@ -38,6 +38,7 @@ function resetGame() {
 
 function startGame() {
 
+
   document.getElementById("player").style.visibility = "visible";
   document.getElementById("pg-header").style.visibility = "hidden";
 
