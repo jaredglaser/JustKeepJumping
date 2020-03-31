@@ -17,7 +17,6 @@ class Engine {
         var element = document.getElementById(entity.id);
         if(entity.y >= $("#container").height() + 100 ) {
             if(entity.type == entityType.PLATFORM){
-                //console.log("removing " + entity.id + " with x:" + entity.x + " and with y:" + entity.y);
                 element.remove();
                 this.entities.splice(this.entities.indexOf(entity),1);
             }

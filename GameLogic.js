@@ -114,7 +114,6 @@ class LogicController {
   }
 
   gameloop(timestamp, engineinstance) {
-    console.log(this.firstLoop);
     var timeDifference = timestamp - this.lasttimestamp;
     this.lasttimestamp = timestamp;
     var generatePlatforms = (MAXPLAT > engineinstance.entities.length - 1) && (timestamp - this.lastSpawn > 200);
@@ -149,7 +148,6 @@ class LogicController {
         var collision = engineinstance.entities[0].collided(entity, 5);
         if (collision == collisionType.ABOVE) {
           engineinstance.entities[0].colliding = true;
-          console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from above");
           engineinstance.entities[0].fixposition(entity);
         }
       }
@@ -249,7 +247,7 @@ class LogicController {
     var ySelect;
     var xSelect;
     var id = this.create_UUID();
-    for(var attempt = 0; attempt < 10 ; attempt++){ //try to find a location 10 times, if we can't then give up
+    for(var attempt = 0; attempt < 3 ; attempt++){ //try to find a location 10 times, if we can't then give up
       xSelect = Math.random()*screenWidth;
       ySelect = isFirst?1*(Math.random()*screenHeight):-1*(Math.random()*screenHeight);
       var tooclose = false;
@@ -263,7 +261,7 @@ class LogicController {
       if(!tooclose){ //we found a proper location
         break;
       }
-      if(attempt == 9){
+      if(attempt == 2){
         return;
       }
     }

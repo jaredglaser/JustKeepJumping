@@ -69,7 +69,6 @@ class Entity {
         this.vy = platform.vy;
         this.y = platform.y + (platform.top - platform.bottom);
         this.correctsides();
-        console.log("player jumped");
         this.jump();
     }
     correctsides() {
