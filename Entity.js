@@ -14,6 +14,7 @@ class Entity {
         this.alreadyfallen = false;
         this.type = type;
         this.colliding = false;
+        this.visible = false;
     }
     updateposition(timefactor) {
         var element = document.getElementById(this.id);
@@ -99,6 +100,10 @@ class Entity {
         this.bottom = this.y + height;
     }
     collided(otherEntity, threshold) {
+         //make sure that they can collide
+         if(!this.visible || !otherEntity.visible){
+            return collisionType.NONE;
+        }
 
         if (this.x < otherEntity.x + (otherEntity.right-otherEntity.left) &&
             this.x + (this.right-this.left) > otherEntity.x &&

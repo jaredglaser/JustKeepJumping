@@ -43,6 +43,7 @@ function startGame() {
   document.getElementById("pg-header").style.visibility = "hidden";
 
   var player1 = new Entity("player", entityType.PLAYER);
+  player1.visible = true;
   var logicController1 = new LogicController();
   var engine1 = new Engine([player1], logicController1);
   keydown = function (event) {
@@ -123,15 +124,14 @@ class LogicController {
         this.spawnEntities(engineinstance,false);
       }
     }
-    //first check if any of the platforms are past the 100px mark
     else {
-      if (generatePlatforms) {
-        //now set the already fallen flag on all of them
+        //if any platform is below the 100px mark, set its visibility to true
         engineinstance.entities.map(function (x) {
-          x.alreadyfallen = true;
-          return x
+          if(x.y >= 100){
+            x.visible = true;
+            document.getElementById(x.id).style.visibility = "visible";
+          }
         });
-      }
       //if new platforms need to be added, add them now
       if (generatePlatforms) {
         this.spawnEntities(engineinstance,false);
@@ -263,6 +263,9 @@ class LogicController {
       if(!tooclose){ //we found a proper location
         break;
       }
+      if(attempt == 9){
+        return;
+      }
     }
     $("#container").append($("<div></div>").attr({ "id": id, "class": "platform" }));
     var platform = new Entity(id, entityType.PLATFORM);
@@ -271,6 +274,7 @@ class LogicController {
     var element = document.getElementById(id);
     element.style.top = toString(platform.y) + "px";
     element.style.left = toString(platform.x) + "px";
+    element.style.visibility = "hidden";
     engineinstance.entities.push(platform);
 
     var sharkGen = Math.floor(Math.random()*25);
@@ -278,6 +282,7 @@ class LogicController {
       var enemyId = this.create_UUID();
       $("#container").append($("<div></div>").attr({ "id": enemyId, "class": "enemy" }));
       var enemy = new Entity(enemyId, entityType.ENEMY);
+      enemy.visible = true;
       var enemyArray = [screenHeight/2, screenHeight/4, (3*screenHeight/4)];
       var yEnemySelect = Math.floor(Math.random()*3);
       enemy.x = -100;
