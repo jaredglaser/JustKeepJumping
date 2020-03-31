@@ -48,19 +48,19 @@ function animateShark() {
 
 var tID3;
 function animateCoin() {
-  var position = 60; //start position for the image slicer
-  const interval = 100; //100 ms of interval for the setInterval()
+  var position = 200; //start position for the image slicer
+  const interval = 250; //100 ms of interval for the setInterval()
   var allCoins = document.getElementsByClassName("coin");
   tID2 = setInterval(() => {
 
     for(var i = 0; i < allCoins.length; i++){
 
-      allEnemies[i].style.backgroundPosition = `-${position}px 0px`;
+      allCoins[i].style.backgroundPosition = `-${position}px 0px`;
       //we use the ES6 template literal to insert the variable "position"
-      if (position < 360) { position = position + 60; }
-      //we increment the position by 60 each time
-      else { position = 60; }
-      //reset the position to 60px, once position exceeds 360px
+      if (position < 1200) { position = position + 200; }
+      //we increment the position by 200 each time
+      else { position = 200; }
+      //reset the position to 200px, once position exceeds 1200px
     }
   }
     , interval);
@@ -163,7 +163,7 @@ class LogicController {
 
     animateScript();
     animateShark();
-    //animateCoin();
+    animateCoin();
 
     //update the score based on the time
     document.getElementById("score").innerText = "Score: " + Math.floor((timestamp-this.starttimestamp)/1000*10).toString();
@@ -326,6 +326,7 @@ class LogicController {
     element.style.visibility = "hidden";
     engineinstance.entities.push(platform);
 
+    // spawn sharks
     var sharkGen = Math.floor(Math.random()*25);
     if (sharkGen == 5) {
       var enemyId = this.create_UUID();
@@ -337,6 +338,20 @@ class LogicController {
       enemy.x = -100;
       enemy.y = enemyArray[yEnemySelect];
       engineinstance.entities.push(enemy);
+    }
+
+      //spawn coins
+    var coinGen = Math.floor(Math.random()*25);
+    if (coinGen == 5) {
+      var coinId = this.create_UUID();
+      $("#container").append($("<div></div>").attr({ "id": coinId, "class": "coin" }));
+      var coin = new Entity(coinId, entityType.COIN);
+      coin.visible = true;
+      var coinArray = [screenHeight/2, screenHeight/4, (3*screenHeight/4)];
+      var xCoinSelect = Math.floor(Math.random()*3);
+      coin.x = coinArray[xCoinSelect];
+      coin.y = 0;
+      engineinstance.entities.push(coin);
     }
   }
 
