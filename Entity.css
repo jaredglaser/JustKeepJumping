@@ -80,3 +80,10 @@
   position: absolute;
   background:url('assets/images/shark_anim.png') 0px 0px;
 }
+
+.powerup {
+  width: 60px;
+  height: 35px;
+  position: absolute;
+  background:url('assets/images/coin.png') 0px 0px;
+}
