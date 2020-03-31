@@ -46,6 +46,26 @@ function animateShark() {
     , interval);
 }
 
+var tID3;
+function animateCoin() {
+  var position = 60; //start position for the image slicer
+  const interval = 100; //100 ms of interval for the setInterval()
+  var allCoins = document.getElementsByClassName("coin");
+  tID2 = setInterval(() => {
+
+    for(var i = 0; i < allCoins.length; i++){
+
+      allEnemies[i].style.backgroundPosition = `-${position}px 0px`;
+      //we use the ES6 template literal to insert the variable "position"
+      if (position < 360) { position = position + 60; }
+      //we increment the position by 60 each time
+      else { position = 60; }
+      //reset the position to 60px, once position exceeds 360px
+    }
+  }
+    , interval);
+}
+
 var keydown;
 var keyup;
 
@@ -70,8 +90,7 @@ function startGame() {
   var engine1 = new Engine([player1], logicController1);
 
   keydown = function (event) {
-    animateScript();
-    animateShark();
+    
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }
@@ -141,6 +160,11 @@ class LogicController {
   gameloop(timestamp, engineinstance) {
     var timeDifference = timestamp - this.lasttimestamp;
     this.lasttimestamp = timestamp;
+
+    animateScript();
+    animateShark();
+    //animateCoin();
+
     //update the score based on the time
     document.getElementById("score").innerText = "Score: " + Math.floor((timestamp-this.starttimestamp)/1000*10).toString();
     var generatePlatforms = (MAXPLAT > engineinstance.entities.length - 1) && (timestamp - this.lastSpawn > 200);
