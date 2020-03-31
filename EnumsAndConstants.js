@@ -21,5 +21,6 @@ const MOVEMENT = {
 
 const entityType = {
     PLAYER: 0,
-    PLATFORM: 1
+    PLATFORM: 1,
+    ENEMY: 2
 }

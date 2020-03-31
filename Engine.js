@@ -49,7 +49,7 @@ class Engine {
     boundsDetection(entity){
         //check out of bounds
         var element = document.getElementById(entity.id);
-        if(entity.y >= $("#container").height() ) {
+        if(entity.y >= $("#container").height() + 100 ) {
             if(entity.type == entityType.PLATFORM){
                 //console.log("removing " + entity.id + " with x:" + entity.x + " and with y:" + entity.y);
                 element.remove();
@@ -72,6 +72,12 @@ class Engine {
             }
             else if (entity.x <= 0) {
                 entity.x = $("#container").width() - 57;
+            }
+        }
+        else if (entity.type == entityType.ENEMY) {
+            if (entity.x >= $("#container").width() + 100) {
+                element.remove();
+                this.entities.splice(this.entities.indexOf(entity),1);
             }
         }
     }

@@ -18,12 +18,15 @@ class Entity {
     updateposition(timefactor) {
         var element = document.getElementById(this.id);
 
+        if (this.type == entityType.ENEMY) {
+            this.vx = 10;
+        }
         //determine the new x and y
-        if (this.type == entityType.PLAYER) {
-            this.ay = this.ay + .6;
+        else if (this.type == entityType.PLAYER) {
+                this.ay = this.ay + .6;
         }
         else {
-            this.ay = this.ay + .5;
+                this.ay = this.ay + .5;
         }
         this.vy = this.vy + (this.ay * timefactor);
         this.vx = this.vx + (this.ax * timefactor);
@@ -82,6 +85,10 @@ class Entity {
             case entityType.PLAYER:
                 width = $("#player").width();
                 height = $("#player").height();
+                break;
+            case entityType.ENEMY:
+                width = $(".enemy").width();
+                height = $(".enemy").height();
                 break;
             default:
                 break;

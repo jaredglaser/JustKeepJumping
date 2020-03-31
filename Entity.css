@@ -59,10 +59,16 @@
   transform: rotate(45deg);
 }
 
-
 .platform {
   width: 100px;
   height: 30px;
   position: absolute;
   background:url('assets/images/platforms.png');
+}
+
+.enemy {
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  background:url('assets/images/shark.jpg');
 }

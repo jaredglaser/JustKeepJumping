@@ -236,8 +236,19 @@ class LogicController {
     var element = document.getElementById(id);
     element.style.top = toString(platform.y) + "px";
     element.style.left = toString(platform.x) + "px";
-    
     engineinstance.entities.push(platform);
+
+    var sharkGen = Math.floor(Math.random()*25);
+    if (sharkGen == 5) {
+      var enemyId = this.create_UUID();
+      $("#container").append($("<div></div>").attr({ "id": enemyId, "class": "enemy" }));
+      var enemy = new Entity(enemyId, entityType.ENEMY);
+      var enemyArray = [screenHeight/2, screenHeight/4, (3*screenHeight/4)];
+      var yEnemySelect = Math.floor(Math.random()*3);
+      enemy.x = -100;
+      enemy.y = enemyArray[yEnemySelect];
+      engineinstance.entities.push(enemy);
+    }
   }
 
 
