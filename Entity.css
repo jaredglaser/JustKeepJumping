@@ -76,7 +76,7 @@
 
 .enemy {
   width: 100px;
-  height: 30px;
+  height: 50px;
   position: absolute;
-  background:url('assets/images/shark.jpg');
+  background:url('assets/images/shark_anim.png') 0px 0px;
 }

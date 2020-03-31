@@ -19,9 +19,29 @@ function animateScript() {
       `-${position}px 0px`;
     //we use the ES6 template literal to insert the variable "position"
     if (position < 144) { position = position + 48; }
-    //we increment the position by 256 each time
+    //we increment the position by 48 each time
     else { position = 48; }
-    //reset the position to 256px, once position exceeds 1536px
+    //reset the position to 48px, once position exceeds 1536px
+  }
+    , interval);
+}
+
+var tID2;
+function animateShark() {
+  var position = 100; //start position for the image slicer
+  const interval = 100; //100 ms of interval for the setInterval()
+  var allEnemies = document.getElementsByClassName("enemy");
+  tID2 = setInterval(() => {
+
+    for(var i = 0; i < allEnemies.length; i++){
+
+      allEnemies[i].style.backgroundPosition = `-${position}px 0px`;
+      //we use the ES6 template literal to insert the variable "position"
+      if (position < 800) { position = position + 100; }
+      //we increment the position by 100 each time
+      else { position = 100; }
+      //reset the position to 100px, once position exceeds 800px
+    }
   }
     , interval);
 }
@@ -58,6 +78,7 @@ function startGame() {
 
   keydown = function (event) {
     animateScript();
+    animateShark();
     if (event.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }
