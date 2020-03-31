@@ -17,6 +17,12 @@
   background:url('assets/images/playerSprite.png') 0px 0px;
 }
 
+#score {
+  position: absolute;
+  font-size: 22px;
+  color: white;
+  padding: 5px;
+}
 .page-header {
   padding: 60px;
   text-align: center;
