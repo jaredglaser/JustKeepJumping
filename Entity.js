@@ -41,24 +41,30 @@ class Entity {
         var maxdownspeed = isplayer?PLAYERGRAVITY:GRAVITY;
         var maxspeed = isplayer?-PLAYERMAX:-GRAVITY;
         if(this.ay < 0){
-            this.ay = Math.max(this.ay,maxspeed);
+            if (this.ay > maxspeed) this.ay = this.ay;
+            else this.ay = maxspeed;
         }
         else{
-            this.ay = Math.min(this.ay, maxdownspeed);
+            if (this.ay < maxdownspeed) this.ay = this.ay;
+            else this.ay = maxdownspeed;
         }
 
         if(this.vy < 0){
-            this.vy = Math.max(this.vy, maxspeed);
+            if (this.vy > maxspeed) this.vy = this.vy;
+            else this.vy = maxspeed;
         }
         else{
-            this.vy = Math.min(this.vy, maxdownspeed);
+            if (this.vy < maxdownspeed) this.vy = this.vy;
+            else this.vy = maxdownspeed;
         }
         if(isplayer){
         if(this.vx < 0){
-            this.vx = Math.max(this.vx, maxspeed);
+            if (this.vx > maxspeed) this.vx = this.vx;
+            else this.vx = maxspeed;
         }
         else{
-            this.vx = Math.min(this.vx, -1*maxspeed);
+            if (this.vx < -1 * maxspeed) this.vx = this.vx;
+            else this.vx = -1 * maxspeed;
         }
     }
 

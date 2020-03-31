@@ -1,6 +1,6 @@
 const GRAVITY = 3;
 const PLAYERGRAVITY = 6;
-const PLAYERMAX = 12;
+const PLAYERMAX = 13;
 const MAXPLAT = 35;
 
 const collisionType = {
