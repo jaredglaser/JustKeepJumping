@@ -145,24 +145,59 @@ class LogicController {
     for (var i = 0; i < engineinstance.entities.length; i++) {
       var entity = engineinstance.entities[i];
       //Now check collisions if they are not the player
-      if (entity != engineinstance.entities[0]) {
+      if (entity.type == entityType.PLATFORM) {
         var collision = engineinstance.entities[0].collided(entity, 5);
         if (collision == collisionType.ABOVE) {
           engineinstance.entities[0].colliding = true;
           console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from above");
           engineinstance.entities[0].fixposition(entity);
         }
+      }
+      else if (entity.type == entityType.ENEMY) {
+        var collision = engineinstance.entities[0].collided(entity, 5);
+        if (collision == collisionType.ABOVE) {
+          for (var i = engineinstance.entities.length - 1; i > -1; i--) {
+            if (i != 0) {
+                document.getElementById(engineinstance.entities[i].id).remove();
+            }
+            engineinstance.entities.splice(engineinstance.entities.indexOf(engineinstance.entities[i]),1);
+          }
+          document.getElementById("player").style.visibility = "hidden";
+          document.getElementById("GO-header").style.visibility = "visible";
+          this.gameOver = true;
+        }
         if (collision == collisionType.FROMLEFT) {
-          //console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from left");
-          //engineinstance.entities[0].fixposition(entity);
+          for (var i = engineinstance.entities.length - 1; i > -1; i--) {
+            if (i != 0) {
+                document.getElementById(engineinstance.entities[i].id).remove();
+            }
+            engineinstance.entities.splice(engineinstance.entities.indexOf(engineinstance.entities[i]),1);
+          }
+          document.getElementById("player").style.visibility = "hidden";
+          document.getElementById("GO-header").style.visibility = "visible";
+          this.gameOver = true;      
         }
         if (collision == collisionType.FROMRIGHT) {
-          //console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from right");
-          //engineinstance.entities[0].fixposition(entity);
+          for (var i = engineinstance.entities.length - 1; i > -1; i--) {
+            if (i != 0) {
+                document.getElementById(engineinstance.entities[i].id).remove();
+            }
+            engineinstance.entities.splice(engineinstance.entities.indexOf(engineinstance.entities[i]),1);
+          }
+          document.getElementById("player").style.visibility = "hidden";
+          document.getElementById("GO-header").style.visibility = "visible";
+          this.gameOver = true;
         }
         if (collision == collisionType.BELOW) {
-          //console.log(engineinstance.entities[0].id + "collided with" + entity.id + " from below");
-          //engineinstance.entities[0].fixposition(entity);
+          for (var i = engineinstance.entities.length - 1; i > -1; i--) {
+            if (i != 0) {
+                document.getElementById(engineinstance.entities[i].id).remove();
+            }
+            engineinstance.entities.splice(engineinstance.entities.indexOf(engineinstance.entities[i]),1);
+          }
+          document.getElementById("player").style.visibility = "hidden";
+          document.getElementById("GO-header").style.visibility = "visible";
+          this.gameOver = true;
         }
       }
     }
