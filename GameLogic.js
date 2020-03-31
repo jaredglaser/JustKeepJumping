@@ -249,7 +249,7 @@ class LogicController {
     var ySelect;
     var xSelect;
     var id = this.create_UUID();
-    while(true){
+    for(var attempt = 0; attempt < 10 ; attempt++){ //try to find a location 10 times, if we can't then give up
       xSelect = Math.random()*screenWidth;
       ySelect = isFirst?1*(Math.random()*screenHeight):-1*(Math.random()*screenHeight);
       var tooclose = false;
