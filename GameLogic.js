@@ -56,7 +56,6 @@ function resetGame() {
   startGame();
 }
 
-var lastLogicControllerReference = null;
 function startGame() {
 
 
@@ -65,15 +64,9 @@ function startGame() {
 
   var player1 = new Entity("player", entityType.PLAYER);
   player1.visible = true;
-  var previousTimeStamp;
-  if(lastLogicControllerReference != null){
-    previousTimeStamp = lastLogicControllerReference.lasttimestamp;
-  }
   var logicController1 = new LogicController();
   lastLogicControllerReference = logicController1;
-  if(previousTimeStamp != null){
-  logicController1.starttimestamp = previousTimeStamp;
-  }
+  logicController1.starttimestamp = event.timeStamp;
   var engine1 = new Engine([player1], logicController1);
 
   keydown = function (event) {
