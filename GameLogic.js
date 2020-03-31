@@ -36,6 +36,7 @@ function resetGame() {
   startGame();
 }
 
+var lastLogicControllerReference = null;
 function startGame() {
 
 
@@ -44,8 +45,17 @@ function startGame() {
 
   var player1 = new Entity("player", entityType.PLAYER);
   player1.visible = true;
+  var previousTimeStamp;
+  if(lastLogicControllerReference != null){
+    previousTimeStamp = lastLogicControllerReference.lasttimestamp;
+  }
   var logicController1 = new LogicController();
+  lastLogicControllerReference = logicController1;
+  if(previousTimeStamp != null){
+  logicController1.starttimestamp = previousTimeStamp;
+  }
   var engine1 = new Engine([player1], logicController1);
+
   keydown = function (event) {
     animateScript();
     if (event.defaultPrevented) {
@@ -107,6 +117,7 @@ function startGame() {
 class LogicController {
   constructor() {
     this.lasttimestamp = 0;
+    this.starttimestamp = 0;
     this.lastSpawn = 0;
     this.input = 0;
     this.firstLoop = true;
@@ -116,6 +127,8 @@ class LogicController {
   gameloop(timestamp, engineinstance) {
     var timeDifference = timestamp - this.lasttimestamp;
     this.lasttimestamp = timestamp;
+    //update the score based on the time
+    document.getElementById("score").innerText = "Score: " + Math.floor((timestamp-this.starttimestamp)/1000*10).toString();
     var generatePlatforms = (MAXPLAT > engineinstance.entities.length - 1) && (timestamp - this.lastSpawn > 200);
     if (this.firstLoop) { //was the game just started?
       for(var i = 0; i < MAXPLAT/2; i++){
