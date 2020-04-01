@@ -57,6 +57,8 @@
   background-color: white;
   border-radius: 4px;
   position: relative;
+  font-size: 15px;
+  color: black;
 }
 
 .close{
