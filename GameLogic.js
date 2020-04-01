@@ -155,6 +155,7 @@ class LogicController {
     this.input = 0;
     this.firstLoop = true;
     this.gameOver = false;
+    this.coins = 0;
   }
 
   gameloop(timestamp, engineinstance) {
@@ -166,7 +167,7 @@ class LogicController {
     animateCoin();
 
     //update the score based on the time
-    document.getElementById("score").innerText = "Score: " + Math.floor((timestamp-this.starttimestamp)/1000*10).toString();
+    document.getElementById("score").innerText = "Score: " + (this.coins + Math.floor((timestamp-this.starttimestamp)/1000*10)).toString();
     var generatePlatforms = (MAXPLAT > engineinstance.entities.length - 1) && (timestamp - this.lastSpawn > 200);
     if (this.firstLoop) { //was the game just started?
       for(var i = 0; i < MAXPLAT/2; i++){
@@ -204,7 +205,7 @@ class LogicController {
       }
       else if (entity.type == entityType.ENEMY) {
         var collision = engineinstance.entities[0].collided(entity, 5);
-        if (collision == collisionType.ABOVE) {
+        if (collision != collisionType.NONE) {
           for (var i = engineinstance.entities.length - 1; i > -1; i--) {
             if (i != 0) {
                 document.getElementById(engineinstance.entities[i].id).remove();
@@ -215,39 +216,15 @@ class LogicController {
           document.getElementById("GO-header").style.visibility = "visible";
           this.gameOver = true;
         }
-        if (collision == collisionType.FROMLEFT) {
-          for (var i = engineinstance.entities.length - 1; i > -1; i--) {
-            if (i != 0) {
-                document.getElementById(engineinstance.entities[i].id).remove();
-            }
-            engineinstance.entities.splice(engineinstance.entities.indexOf(engineinstance.entities[i]),1);
-          }
-          document.getElementById("player").style.visibility = "hidden";
-          document.getElementById("GO-header").style.visibility = "visible";
-          this.gameOver = true;      
+      }
+      else if(entity.type == entityType.COIN){
+        var collision = engineinstance.entities[0].collided(entity, 5);
+        if (collision != collisionType.NONE) {
+          document.getElementById(entity.id).remove();
+          engineinstance.entities.splice(i,1);
+          this.coins += 1000;
         }
-        if (collision == collisionType.FROMRIGHT) {
-          for (var i = engineinstance.entities.length - 1; i > -1; i--) {
-            if (i != 0) {
-                document.getElementById(engineinstance.entities[i].id).remove();
-            }
-            engineinstance.entities.splice(engineinstance.entities.indexOf(engineinstance.entities[i]),1);
-          }
-          document.getElementById("player").style.visibility = "hidden";
-          document.getElementById("GO-header").style.visibility = "visible";
-          this.gameOver = true;
-        }
-        if (collision == collisionType.BELOW) {
-          for (var i = engineinstance.entities.length - 1; i > -1; i--) {
-            if (i != 0) {
-                document.getElementById(engineinstance.entities[i].id).remove();
-            }
-            engineinstance.entities.splice(engineinstance.entities.indexOf(engineinstance.entities[i]),1);
-          }
-          document.getElementById("player").style.visibility = "hidden";
-          document.getElementById("GO-header").style.visibility = "visible";
-          this.gameOver = true;
-        }
+
       }
     }
     for (var i = 0; i < engineinstance.entities.length; i++) {

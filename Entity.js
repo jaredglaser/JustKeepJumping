@@ -96,6 +96,10 @@ class Entity {
                 width = $(".enemy").width();
                 height = $(".enemy").height();
                 break;
+                case entityType.COIN:
+                    width = $(".coin").width();
+                    height = $(".coin").height();
+                    break;
             default:
                 break;
         }
